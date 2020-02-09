@@ -4,7 +4,6 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.util.Collections;
 import java.util.HashMap;
@@ -12,6 +11,23 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 public class Server {
+
+    public enum RequestMethod {
+        GET("GET"),
+        POST("POST"),
+        DELETE("DELETE"),
+        UPDATE("UPDATE");
+
+        private final String method;
+
+        RequestMethod(final String method) {
+            this.method = method;
+        }
+
+        public String getMethod() {
+            return method;
+        }
+    }
 
     private final HttpServer server;
     private Map<String, Supplier<Response>> endpoints = new HashMap<>();
@@ -22,7 +38,7 @@ public class Server {
     }
 
     private void callback(HttpExchange exchange) {
-        final var response = endpoints.getOrDefault(exchange.getRequestURI().toString(), () -> new Response(404, "", Collections.emptyMap())).get();
+        final var response = endpoints.getOrDefault(exchange.getRequestMethod() + exchange.getRequestURI().toString(), () -> new Response(404, "", Collections.emptyMap())).get();
 
         try {
             exchange.sendResponseHeaders(response.getCode(), response.getBody().getBytes().length);
@@ -45,7 +61,7 @@ public class Server {
         server.start();
     }
 
-    public void addEndpoint(String path, Supplier<Response> handler) {
-        endpoints.put(path, handler);
+    public void addEndpoint(String path, RequestMethod method, Supplier<Response> handler) {
+        endpoints.put(method.getMethod() + path, handler);
     }
 }
