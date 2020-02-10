@@ -9,7 +9,7 @@ public class Database {
 
     public Database() {
         try {
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres?user=postgres&password=12345");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/avans?user=root&password=password");
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(-1);
