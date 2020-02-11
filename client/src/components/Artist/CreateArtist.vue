@@ -12,7 +12,11 @@
                         <div class="my-5">
                             <label class="mr-2">Artist name:</label>
                             <input v-model="artist.name" class="border rounded focus:outline-none appearance-none px-1">
-                        </div>   
+                        </div>
+                        <div class="my-5">
+                            <p class="mr-2 mb-2">Artist description:</p>
+                            <textarea v-model="artist.desc" class="border rounded focus:outline-none appearance-none px-1 w-2/3" />
+                        </div> 
                         <div class="flex mt-10">
                             <button class="px-2 py-1 text-white bg-green-500 hover:bg-green-600 rounded w-2/12 mr-5 transition duration-100 focus:outline-none">Save</button>
                             <button @click="visible = false, artist = {}" class="px-2 py-1 text-white bg-red-500 hover:bg-red-600 rounded w-2/12 transition duration-100 focus:outline-none">Close</button>
