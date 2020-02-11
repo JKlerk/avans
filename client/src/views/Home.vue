@@ -1,6 +1,7 @@
 <template>
 	<div>
 		<EditArtist :bands="bands" ref="editartist"/>
+		<CreateArtist :bands="bands" ref="createartist"/>
 		<div class="mt-2 min-h-screen" id="gradient">
 			<div class="flex justify-center pt-10">
 				<div class="w-1/3 shadow mx-5 px-4">
@@ -8,6 +9,7 @@
 					<div :key="artist.id" v-for="artist in artists">
 						<Artist :artist=artist />
 					</div>
+					<button @click="$refs.createartist.visible = true" class="px-2 py-1 text-white bg-green-500 hover:bg-green-600 rounded w-1/3 my-4 transition duration-100 focus:outline-none">Create new artist</button>
 				</div>
 				<div class="w-1/3 shadow mx-5">
 					<h1 class="p-4">Stages</h1>
@@ -20,10 +22,12 @@
 <script>
 import Artist from '@/components/Artist'
 import EditArtist from '@/components/EditArtist'
+import CreateArtist from '@/components/CreateArtist'
 export default {
 	components:{
 		Artist,
-		EditArtist
+		EditArtist,
+		CreateArtist
 	},
 	data(){
 		return{
@@ -56,7 +60,7 @@ export default {
 				}
 			]
 		}
-  }
+  	},
 }
 </script>
 
