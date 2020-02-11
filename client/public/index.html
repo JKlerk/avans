@@ -12,6 +12,21 @@
     <noscript>
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
+    <style>
+      .fade-enter-active, .fade-leave-active {
+        transition: all 0.1s ease-in-out;
+        -webkit-transition: all .2s ease-in-out; /* WebKit */
+        -moz-transition: all .2s ease-in-out; /* Mozilla */
+        -o-transition: all .2s ease-in-out; /* Opera */
+        -ms-transition: all .2s ease-in-out; /* Internet Explorer */
+        max-height: 250px;
+        overflow: auto;
+      }
+      .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+        opacity: 0;
+        max-height: 0px;
+      }
+    </style>
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>

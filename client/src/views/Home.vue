@@ -1,14 +1,17 @@
 <template>
-	<div class="mt-2 min-h-screen" id="gradient">
-		<div class="flex justify-center pt-10">
-			<div class="w-1/3 shadow mx-5 px-4">
-				<h1 class="py-4 text-2xl">Artists</h1>
-				<div :key="artist.id" v-for="artist in artists">
-					<Artist :artist=artist />
+	<div>
+		<EditArtist :bands="bands" ref="editartist"/>
+		<div class="mt-2 min-h-screen" id="gradient">
+			<div class="flex justify-center pt-10">
+				<div class="w-1/3 shadow mx-5 px-4">
+					<h1 class="py-4 text-2xl">Artists</h1>
+					<div :key="artist.id" v-for="artist in artists">
+						<Artist :artist=artist />
+					</div>
 				</div>
-			</div>
-			<div class="w-1/3 shadow mx-5">
-				<h1 class="p-4">Stages</h1>
+				<div class="w-1/3 shadow mx-5">
+					<h1 class="p-4">Stages</h1>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -16,26 +19,43 @@
 
 <script>
 import Artist from '@/components/Artist'
+import EditArtist from '@/components/EditArtist'
 export default {
-  name: 'Home',
-  components:{
-	  Artist
-  },
-  data(){
-	  return{
-		  artists:[
-			  {
-				  id: 1,
-				  name: 'Jan',
-				  band_id: 1
-			  },
-			  {
-				  id: 2,
-				  name: 'Kees',
-				  band_id: 1
-			  }
-		  ]
-	  }
+	components:{
+		Artist,
+		EditArtist
+	},
+	data(){
+		return{
+			artists:[
+				{
+					id: 1,
+					name: 'Jan',
+					band: {
+						id: 1,
+						name: 'Band 1'
+					}
+				},
+				{
+					id: 2,
+					name: 'Kees',
+					band: {
+						id: 2,
+						name: 'Band 2'
+					}
+				}
+			],
+			bands:[
+				{
+					id: 1,
+					name: 'Band 1'
+				},
+				{
+					id: 2,
+					name: 'Band 2'
+				}
+			]
+		}
   }
 }
 </script>

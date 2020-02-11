@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <Nav class="z-40"></Nav>
-    <router-view class="z-0"></router-view>
+    <Nav></Nav>
+    <router-view></router-view>
   </div>
 </template>
 <script>

@@ -8,7 +8,8 @@
             <div v-if="visible" class="p-4 border-t">
                 <p>User ID: {{ artist.id }}</p>
                 <p>Name: {{ artist.name }}</p>
-                <p>Band_ID: {{ artist.band_id }}</p>
+                <p>Band: {{ artist.band.name }}</p>
+                <button class="appereance-none bg-green-500 hover:bg-green-600 py-1 text-white rounded px-2 text-sm mt-2 transition duration-100 focus:outline-none" @click="editArtist(artist)">Edit Artist</button>
             </div>
         </transition>
     </div>
@@ -21,22 +22,12 @@ export default {
         return{
             visible: false
         }
+    },
+    methods:{
+        editArtist(artist){
+            this.$parent.$refs.editartist.artist = artist
+            this.$parent.$refs.editartist.visible = true
+        }
     }
 }
 </script>
-
-<style scoped>
-.fade-enter-active, .fade-leave-active {
-    transition: all 0.1s ease-in-out;
-    -webkit-transition: all .2s ease-in-out; /* WebKit */
-    -moz-transition: all .2s ease-in-out; /* Mozilla */
-    -o-transition: all .2s ease-in-out; /* Opera */
-    -ms-transition: all .2s ease-in-out; /* Internet Explorer */
-  max-height: 250px;
-  overflow: auto;
-}
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
-   max-height: 0px;
-}
-</style>
