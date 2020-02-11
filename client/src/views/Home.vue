@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<EditArtist :bands="bands" ref="editartist"/>
-		<CreateArtist :bands="bands" ref="createartist"/>
+		<EditArtist ref="editartist"/>
+		<CreateArtist ref="createartist"/>
 		<DeleteArtist ref="deleteartist"/>
 		<div class="mt-2 min-h-screen" id="gradient">
 			<div class="flex justify-center pt-10">
@@ -18,15 +18,20 @@
 					<h1 class="py-4 text-2xl">Stages</h1>
 				</div>
 			</div>
+			<div class="flex justify-center pt-10">
+				<div class="w-1/3 shadow mx-5 px-4">
+					<h1 class="py-4 text-2xl">Performances</h1>
+				</div>
+			</div>
 		</div>
 	</div>
 </template>
 
 <script>
-import Artist from '@/components/Artist'
-import EditArtist from '@/components/EditArtist'
-import CreateArtist from '@/components/CreateArtist'
-import DeleteArtist from '@/components/DeleteArtist'
+import Artist from '@/components/Artist/Artist'
+import EditArtist from '@/components/Artist/EditArtist'
+import CreateArtist from '@/components/Artist/CreateArtist'
+import DeleteArtist from '@/components/Artist/DeleteArtist'
 export default {
 	components:{
 		Artist,
@@ -40,30 +45,12 @@ export default {
 				{
 					id: 1,
 					name: 'Jan',
-					band: {
-						id: 1,
-						name: 'Band 1'
-					}
 				},
 				{
 					id: 2,
 					name: 'Kees',
-					band: {
-						id: 2,
-						name: 'Band 2'
-					}
 				}
 			],
-			bands:[
-				{
-					id: 1,
-					name: 'Band 1'
-				},
-				{
-					id: 2,
-					name: 'Band 2'
-				}
-			]
 		}
   	},
 }

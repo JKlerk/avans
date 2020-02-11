@@ -8,7 +8,6 @@
             <div v-if="visible" class="p-4 border-t">
                 <p>User ID: {{ artist.id }}</p>
                 <p>Name: {{ artist.name }}</p>
-                <p>Band: {{ artist.band.name }}</p>
                 <button class="appereance-none bg-green-500 hover:bg-green-600 py-1 text-white rounded px-2 text-sm mt-2 transition duration-100 focus:outline-none" @click="editArtist(artist)">Edit Artist</button>
 				<button class="appereance-none bg-red-500 hover:bg-red-600 py-1 text-white rounded px-2 text-sm mt-2 ml-4 transition duration-100 focus:outline-none" @click="deleteArtist(artist)">Delete artist</button>
 
