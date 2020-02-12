@@ -13,6 +13,11 @@
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
     <style>
+      @import url('https://rsms.me/inter/inter.css');
+        html { font-family: 'Inter', sans-serif; }
+      @supports (font-variation-settings: normal) {
+        html { font-family: 'Inter var', sans-serif; }
+      }
       .fade-enter-active, .fade-leave-active {
         transition: all 0.1s ease-in-out;
         -webkit-transition: all .2s ease-in-out; /* WebKit */

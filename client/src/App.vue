@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div class="min-h-screen" style="background-color: #f8f8fa;">
     <Nav></Nav>
     <router-view></router-view>
   </div>
