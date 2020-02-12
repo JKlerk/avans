@@ -17,14 +17,14 @@
                                     </div>
                                     <div class="mb-4">
                                         <label class="mr-2 font-medium text-sm tracking-wide text-purple-800 mt-4">Artist Description:</label>
-                                        <textarea rows="5" style="min-height: 20px;" v-model="artist.desc" class="w-full block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-4 text-sm"></textarea>
+                                        <textarea rows="5" v-model="artist.desc" class="w-full block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-4 text-sm"></textarea>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="flex mt-5 items-center justify-between bg-purple-100 border-t-2 border-purple-200 px-8 py-6 -m-6 rounded-b-lg">
-                            <button class="text-white bg-purple-500 hover:bg-purple-600 rounded-full px-8 py-2 text-sm font-semibold transition duration-100 focus:outline-none">Save</button>
-                            <button @click="visible = false, artist = {}" class="text-purple-100 bg-purple-700 hover:bg-purple-800 rounded-full px-8 py-2 text-sm font-semibold transition duration-100 focus:outline-none">Close</button>
+                            <button class="text-white bg-purple-500 hover:bg-purple-600 rounded-full px-8 py-2 text-sm font-semibold transition duration-100 focus:outline-none">Add</button>
+                            <button @click="visible = false, artist = { name: 'Please enter a name'}" class="text-purple-100 bg-purple-700 hover:bg-purple-800 rounded-full px-8 py-2 text-sm font-semibold transition duration-100 focus:outline-none">Close</button>
                         </div>
                     </div>
                 </div>
@@ -32,13 +32,20 @@
         </div>
     </transition>
 </template>
+
 <script>
+import { Edit2Icon } from 'vue-feather-icons'
 export default {
     data(){
         return{
             visible: false,
-            artist:{}
+            artist: {
+                name: 'Please enter a name'
+            },
         }
-    }
+    },
+    components:{
+        Edit2Icon,
+    },
 }
 </script>
