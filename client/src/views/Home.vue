@@ -13,8 +13,7 @@
 		<!-- Performances -->
 		<Performance ref="performance" />
 		<CreatePerformance ref="createperformance"/>
-		<!-- <DeletePerformance ref="deleteperformance"/> -->
-		<div class="flex justify-center">
+		<div class="flex justify-center pt-5">
 			<div class="w-2/3 rounded-lg flex items-center" style="height: 400px; background-image: url('https://images.unsplash.com/photo-1464375117522-1311d6a5b81f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80'); background-repeat: no-repeat; background-position: center;">
 				<div class="flex flex-1 justify-end mr-20">
 					<h1 class="text-white text-3xl font-bold w-1/12 mr-20">Avans Schoolopdracht</h1>
@@ -40,15 +39,15 @@
 					</div>
 				</div>
 				<!-- Body -->
-				<div class="flex justify-between just mt-10">
-					<div :key="artist.id" v-for="artist in getData().artists" class="shadow rounded-lg bg-white w-1/3 hover:opacity-50 transition duration-200 cursor-pointer" @click="$refs.performance.visible = true, $refs.performance.artist = artist, $refs.performance.performance = getPerformance(artist), $refs.performance.stage = getStage(artist)">
+				<div class="flex flex-row just mt-10">
+					<div :key="artist.id" v-for="artist in getData().artists" class="shadow rounded-lg bg-white w-1/3 hover:opacity-50 transition duration-200 cursor-pointer mr-5" @click="$refs.performance.visible = true, $refs.performance.artist = artist, $refs.performance.performance = getPerformance(artist), $refs.performance.stage = getStage(artist)">
 						<div class="h-48 rounded-t-lg" style="background-image: url('https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60'); background-position: center; background-size: cover;">
 							<div class="flex p-4">
 								<div class="mt-1">
 									<span class="px-4 py-2 text-sm shadow bg-white rounded-lg font-bold">{{ getPerformance(artist).time }}</span>
 								</div>
 								<div class="flex flex-1 justify-end">
-									<span class="px-4 py-2 text-sm shadow bg-white rounded-lg font-bold">{{ getStage(artist).name }}</span>
+									<span class="px-4 py-2 text-sm shadow bg-white rounded-lg font-bold text-purple-600">{{ getStage(artist).name }}</span>
 								</div>
 							</div>
 						</div>
@@ -62,6 +61,9 @@
 								<p class="text-sm text-gray-700">Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
 							</div>
 						</div>
+					</div>
+					<div  @click="$refs.createperformance.visible = true" class="bg-white w-1/3 rounded-lg shadow h-auto flex items-center justify-center hover:bg-gray-100 cursor-pointer">
+						<p class="text-6xl text-purple-600">+</p>
 					</div>
 				</div>
 			</div>
@@ -89,7 +91,6 @@ import DeleteStage from '@/components/Stage/DeleteStage'
 // Performances
 import Performance from '@/components/Performance/Performance'
 import CreatePerformance from '@/components/Performance/CreatePerformance'
-// import DeletePerformance from '@/components/Performance/DeletePerformance'
 
 export default {
 	components:{
@@ -103,7 +104,6 @@ export default {
 		DeleteStage,
 		Performance,
 		CreatePerformance,
-		// DeletePerformance,
 		ShareIcon,
 		HeartIcon
 	},
@@ -193,7 +193,7 @@ export default {
 		var d = new Date()
 		var year = d.toISOString().split('T')
 		var year2 = '2020-02-10T03:00 '.split('T')
-		console.log(year2)
+		// console.log(year2)
 		// var time = d.getHours() + ':' + d.getMinutes()
 		// console.log(time)
 		// console.log(year[0].split('-'))

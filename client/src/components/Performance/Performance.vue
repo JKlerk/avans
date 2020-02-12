@@ -3,7 +3,7 @@
         <div>
             <div class="bg-black opacity-75 fixed min-h-screen z-0 w-full top-0"></div>
             <div class="flex justify-center">
-                <div class="z-40 bg-white w-1/3 fixed rounded-lg shadow overflow-auto -mt-20" style="max-height: 600px">
+                <div class="z-40 bg-white w-1/3 fixed rounded-lg shadow overflow-auto mt-5" style="max-height: 600px">
                     <div class="shadow flex flex-col items-center justify-center p-10 rounded-t-lg relative select-none" style="height: 350px; background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(54, 13, 123, 0.8)), url(https://images.unsplash.com/photo-1464375117522-1311d6a5b81f?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=2250&amp;q=80);background-repeat: no-repeat;background-position: center center;">
                         <div class="top-0 absolute left-0 text-white m-4 bg-purple-900 p-2 hover:bg-purple-800 cursor-pointer transition duration-100 rounded-full" @click="isEditing = !isEditing">
                             <edit-2-icon class="" size="1.0x"></edit-2-icon>
@@ -37,7 +37,7 @@
                                 <input type="datetime-local" class="w-full block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-3 text-sm" id="birthdaytime" name="birthdaytime">
                             </div>
                             <div class="mb-2">
-                                <p class="font-medium text-sm tracking-wide text-purple-800 hover:underline cursor-pointer" @click="confirm = true">Delete performance</p>
+                                <p class="font-medium text-sm tracking-wide text-purple-800 hover:underline cursor-pointer select-none" @click="confirm = true">Delete performance</p>
                             </div>
                             <div v-if="confirm" class="mb-2">
                                 <p class="text-sm">Are you sure?</p>
