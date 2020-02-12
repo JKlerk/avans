@@ -1,21 +1,14 @@
 <template>
-  <div class="flex justify-center pt-5 py-10">
-    <div class="w-2/3">
-      <ul class="flex">
-        <li class="text-2xl font-bold">Avans</li>
-        <div class="flex my-auto flex-1 justify-end">
-          <li class="mx-2 py-1 bg-purple-600 rounded text-white text-sm px-5">Bands</li>
-          <li class="mx-2 py-1 bg-purple-600 rounded text-white text-sm px-5">Artists</li>
-        </div>
-      </ul>
-    </div>
-  </div>
+		<div class="flex justify-center pt-5">
+			<div class="w-2/3 rounded-lg flex items-center relative" style="height: 400px; background-image: url('https://images.unsplash.com/photo-1464375117522-1311d6a5b81f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80'); background-repeat: no-repeat; background-position: center;">
+				<div class="flex flex-1 justify-end mr-20">
+					<h1 class="text-white text-3xl font-bold w-1/12 mr-20">Avans Schoolopdracht</h1>
+				</div>
+        <ul class="text-white absolute bottom-0 right-0 flex mb-5">
+          <router-link class="mx-5 border-purple-500" :to="{ name: 'home' }"  active-class="border-b-2">Homepage</router-link>
+          <router-link class="mx-5 border-purple-500" :to="{ name: 'artists' }"  active-class="border-b-2">Artists</router-link>
+          <router-link class="mx-5 border-purple-500" :to="{ name: 'stages' }"  active-class="border-b-2">Stages</router-link>
+        </ul>
+			</div>
+		</div>
 </template>
-
-<script>
-export default {
-  props: {
-    msg: String
-  }
-}
-</script>

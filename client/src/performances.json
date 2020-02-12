@@ -1,0 +1,18 @@
+[
+    {
+        "id": 1,
+        "name": "Optreden naam 1",
+        "time": "20:42",
+        "date": "2020-01-01",
+        "stage_id": 1,
+        "artist_id": 1
+    },
+    {
+        "id": 2,
+        "name": "Optreden naam 2",
+        "time": "22:11",
+        "date": "2020-02-14",
+        "stage_id": 2,
+        "artist_id": 2
+    }
+]

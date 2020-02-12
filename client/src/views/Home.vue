@@ -1,19 +1,8 @@
 <template>
 	<div>
-		<!-- Artists -->
-		<EditArtist ref="editartist"/>
-		<DeleteArtist ref="deleteartist"/>
-
 		<!-- Performances -->
 		<Performance ref="performance" />
 		<CreatePerformance ref="createperformance"/>
-		<div class="flex justify-center pt-5">
-			<div class="w-2/3 rounded-lg flex items-center" style="height: 400px; background-image: url('https://images.unsplash.com/photo-1464375117522-1311d6a5b81f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80'); background-repeat: no-repeat; background-position: center;">
-				<div class="flex flex-1 justify-end mr-20">
-					<h1 class="text-white text-3xl font-bold w-1/12 mr-20">Avans Schoolopdracht</h1>
-				</div>
-			</div>
-		</div>
 
 		<div class="flex justify-center pt-5 pb-10">
 			<div class="mx-20 w-2/3">
@@ -21,27 +10,45 @@
 				<div class="flex">
 					<h1 class="text-3xl font-bold">Upcoming Events</h1>
 					<div class="flex flex-1 justify-end">
-						<select class="focus:outline-none px-5 text-sm rounded mx-5 border">
-							<option>Weekdays</option>
+						<div class="w-3/12 text-center bg-white block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-2 text-sm mx-2 flex">
+							<div class="my-auto mr-3">
+								<search-icon size="1.0x" />
+							</div>
+							<input placeholder="Search for events" class="appearance-none focus:outline-none w-full">
+						</div>
+						<!-- TODO SORTING -->
+						<div class="w-2/12 text-center bg-white block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-2 text-sm mx-2 flex">
+							<label class="select-none" for="select">Filter by:</label>
+							<div class="flex flex-1 justify-end mr-2">
+								<select id="select" class="appearance-none focus:outline-none bg-white">
+									<option>None</option>
+									<option>Asc.</option>
+									<option>Desc.</option>
+								</select>
+							</div>
+						</div>
+						<select class="w-2/12 text-center bg-white block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-2 text-sm mx-2">
+							<option selected disabled>Select an artist</option>
+							<option>None</option>
+							<option :key="artist.id" v-for="artist in getArtists()">{{ artist.name }}</option>
 						</select>
-						<select class="focus:outline-none px-5 text-sm rounded mx-5 border">
-							<option>Event type</option>
-						</select>
-						<select class="focus:outline-none px-5 text-sm rounded mx-5 border">
-							<option>Any Category</option>
+						<select class="w-2/12 text-center bg-white block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-2 text-sm mx-2">
+							<option selected disabled>Select a stage</option>
+							<option>None</option>
+							<option :key="stage.id" v-for="stage in getStages()">{{ stage.name }}</option>
 						</select>
 					</div>
 				</div>
 				<!-- Body -->
 				<div class="flex flex-row just mt-10">
-					<div :key="artist.id" v-for="artist in getData().artists" class="shadow rounded-lg bg-white w-1/3 hover:opacity-50 transition duration-200 cursor-pointer mr-5" @click="$refs.performance.visible = true, $refs.performance.artist = artist, $refs.performance.performance = getPerformance(artist), $refs.performance.stage = getStage(artist)">
+					<div :key="artist.id" v-for="artist in getArtists()" class="shadow rounded-lg bg-white w-1/3 hover:opacity-50 transition duration-200 cursor-pointer mr-5" @click="$refs.performance.visible = true, $refs.performance.artist = artist, $refs.performance.performance = getSpecificPerformance(artist), $refs.performance.stage = getStage(artist)">
 						<div class="h-48 rounded-t-lg" style="background-image: url('https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60'); background-position: center; background-size: cover;">
 							<div class="flex p-4">
 								<div class="mt-1">
-									<span class="px-4 py-2 text-sm shadow bg-white rounded-lg font-bold">{{ getPerformance(artist).time }}</span>
+									<span class="px-4 py-2 text-sm shadow bg-white rounded-lg font-bold">{{ getSpecificPerformance(artist).time }}</span>
 								</div>
 								<div class="flex flex-1 justify-end">
-									<span class="px-4 py-2 text-sm shadow bg-white rounded-lg font-bold text-purple-600">{{ getStage(artist).name }}</span>
+									<span class="px-4 py-2 text-sm shadow bg-white rounded-lg font-bold text-purple-600">{{ getSpecificStage(artist).name }}</span>
 								</div>
 							</div>
 						</div>
@@ -51,7 +58,7 @@
 								<p class="font-bold mt-3">{{ getDate(artist).day }}</p>
 							</div>
 							<div>
-								<h1 class="font-medium mb-2">{{ artist.name }} - {{ getPerformance(artist).name }}</h1>
+								<h1 class="font-medium mb-2">{{ artist.name }} - {{ getSpecificPerformance(artist).name }}</h1>
 								<p class="text-sm text-gray-700">Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
 							</div>
 						</div>
@@ -67,38 +74,29 @@
 
 <script>
 // Icons
-import { ShareIcon } from 'vue-feather-icons'
-import { HeartIcon } from 'vue-feather-icons'
-
-// Artists
-import Artist from '@/components/Artist/Artist'
-import EditArtist from '@/components/Artist/EditArtist'
-import DeleteArtist from '@/components/Artist/DeleteArtist'
-
-// Stages
-import Stage from '@/components/Stage/Stage'
+import { SearchIcon } from 'vue-feather-icons'
 
 // Performances
 import Performance from '@/components/Performance/Performance'
 import CreatePerformance from '@/components/Performance/CreatePerformance'
 
+// Json files
+import artistsData from '@/artists.json'
+import performancesData from '@/performances.json'
+import stagesData from '@/stages.json'
+
 export default {
 	components:{
-		Artist,
-		EditArtist,
-		DeleteArtist,
-		Stage,
 		Performance,
 		CreatePerformance,
-		ShareIcon,
-		HeartIcon
+		SearchIcon,
 	},
 	methods:{
 		getDate(artist){
 			const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
   				"Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
 			];
-			var performance = this.getPerformance(artist);
+			var performance = this.getSpecificPerformance(artist);
 			var fullDate = performance.date.split('-');
 			let month = String
 			let day = String
@@ -120,59 +118,22 @@ export default {
 			return{ month: month, day: day }
 		},	
 
-		getPerformance(artist){
-			return this.getData().performances.find(element => element.artist_id === artist.id)
+		getSpecificPerformance(artist){
+			return this.getPerformances().find(element => element.artist_id === artist.id)
 		},
 
-		getStage(artist){
-			var performance = this.getPerformance(artist);
-			return this.getData().stages.find(element => element.id === performance.stage_id)
+		getSpecificStage(artist){
+			var performance = this.getSpecificPerformance(artist);
+			return this.getStages().find(element => element.id === performance.stage_id)
 		},
-		getData(){
-			return{
-				artists:[
-					{
-						id: 1,
-						name: 'Frans Bauer',
-						desc: 'Amet quaerat porro aliquid tenetur reiciendis unde, repellendus voluptatem soluta animi accusamus neque voluptatibus laborum consectetur perspiciatis, sint nihil sequi est incidunt.'
-					},
-					{
-						id: 2,
-						name: 'Frans Shower',
-						desc: 'Amet quaerat porro aliquid tenetur reiciendis unde, repellendus voluptatem soluta animi accusamus neque voluptatibus laborum consectetur perspiciatis, sint nihil sequi est incidunt.'
-					}
-				],
-				stages:[
-					{
-						id: 1,
-						name: 'Stage 1',
-						desc: 'Amet quaerat porro aliquid tenetur reiciendis unde, repellendus voluptatem soluta animi accusamus neque voluptatibus laborum consectetur perspiciatis, sint nihil sequi est incidunt.'
-					},
-					{
-						id: 2,
-						name: 'Stage 2',
-						desc: 'Amet quaerat porro aliquid tenetur reiciendis unde, repellendus voluptatem soluta animi accusamus neque voluptatibus laborum consectetur perspiciatis, sint nihil sequi est incidunt.'
-					}
-				],
-				performances:[
-					{
-						id: 1,
-						name: 'Optreden naam 1',
-						time: '20:42',
-						date: '2020-01-01',
-						stage_id: 1,
-						artist_id: 1,
-					},
-					{
-						id: 2,
-						name: 'Optreden naam 2',
-						time: '22:11',
-						date: '2020-02-14',
-						stage_id: 2,
-						artist_id: 2,
-					}
-				],
-			}
+		getArtists(){
+			return artistsData;
+		},
+		getStages(){
+			return stagesData;
+		},
+		getPerformances(){
+			return performancesData;
 		},
 	},
 	created(){
