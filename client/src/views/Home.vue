@@ -40,7 +40,7 @@
 					</div>
 				</div>
 				<!-- Body -->
-				<div class="flex justify-between mt-10">
+				<div class="flex justify-between just mt-10">
 					<div :key="artist.id" v-for="artist in artists" class="shadow rounded-lg bg-white w-1/3 hover:opacity-50 transition duration-200 cursor-pointer">
 						<div class="h-48 rounded-t-lg" style="background-image: url('https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60'); background-position: center; background-size: cover;">
 							<div class="flex p-4">
@@ -162,8 +162,12 @@ export default {
 			];
 			var performance = this.getPerformance(artist);
 			var monthNumber = performance.date.split('-');
-			return monthNames[monthNumber[1].split('0')[1] - 1]
-		},
+			if(monthNumber[1].includes(0)){
+				return monthNames[monthNumber[1].split('0')[1] - 1]	
+			} else{
+				return monthNames[monthNumber[1] - 1]
+			}
+		},	
 
 		getPerformance(artist){
 			return this.performances.find(element => element.artist_id === artist.id)
