@@ -34,7 +34,7 @@
                             </div>
                             <div class="mb-6">
                                 <label class="mr-2 font-medium text-sm tracking-wide text-purple-800">Time/Date:</label>
-                                <input type="datetime-local" class="w-full block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-3 text-sm" id="birthdaytime" name="birthdaytime">
+                                <input v-model="performance.date" type="datetime-local" class="w-full block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-3 text-sm" id="birthdaytime" name="birthdaytime">
                             </div>
                             <div class="mb-2">
                                 <p class="font-medium text-sm tracking-wide text-purple-800 hover:underline cursor-pointer select-none" @click="confirm = true">Delete performance</p>
@@ -42,8 +42,8 @@
                             <div v-if="confirm" class="mb-2">
                                 <p class="text-sm">Are you sure?</p>
                                 <div class="flex mt-2">
-                                    <button class="mr-2 text-sm p-1 bg-purple-700 text-white rounded-lg px-4 focus:outline-none">Yes</button>
-                                    <button class="mx-2 text-sm p-1 bg-purple-700 text-white rounded-lg px-4 focus:outline-none" @click="confirm = false">No</button>
+                                    <button class="mr-2 text-sm p-1 bg-purple-700 hover:bg-purple-800 transition duration-100 text-white rounded-lg px-4 focus:outline-none">Yes</button>
+                                    <button class="mx-2 text-sm p-1 bg-purple-700 hover:bg-purple-800 transition duration-100 text-white rounded-lg px-4 focus:outline-none" @click="confirm = false">No</button>
                                 </div>
                             </div>
                         </div>

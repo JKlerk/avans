@@ -2,13 +2,7 @@
 	<div>
 		<!-- Artists -->
 		<EditArtist ref="editartist"/>
-		<CreateArtist ref="createartist"/>
 		<DeleteArtist ref="deleteartist"/>
-
-		<!-- Stages -->
-		<EditStage ref="editstage"/>
-		<CreateStage ref="createstage"/>
-		<DeleteStage ref="deletestage"/>
 
 		<!-- Performances -->
 		<Performance ref="performance" />
@@ -79,14 +73,10 @@ import { HeartIcon } from 'vue-feather-icons'
 // Artists
 import Artist from '@/components/Artist/Artist'
 import EditArtist from '@/components/Artist/EditArtist'
-import CreateArtist from '@/components/Artist/CreateArtist'
 import DeleteArtist from '@/components/Artist/DeleteArtist'
 
 // Stages
 import Stage from '@/components/Stage/Stage'
-import EditStage from '@/components/Stage/EditStage'
-import CreateStage from '@/components/Stage/CreateStage'
-import DeleteStage from '@/components/Stage/DeleteStage'
 
 // Performances
 import Performance from '@/components/Performance/Performance'
@@ -96,12 +86,8 @@ export default {
 	components:{
 		Artist,
 		EditArtist,
-		CreateArtist,
 		DeleteArtist,
 		Stage,
-		EditStage,
-		CreateStage,
-		DeleteStage,
 		Performance,
 		CreatePerformance,
 		ShareIcon,

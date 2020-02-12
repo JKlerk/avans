@@ -22,12 +22,42 @@
                                     <option selected disabled>Please select an artist</option>
                                     <option :value="artist.id" :key="artist.id" v-for="artist in $parent.getData().artists">{{ artist.name }}</option>
                                 </select>
+                                <p v-if="!addArtist.toggle" class="mr-2 font-medium text-sm tracking-wide text-purple-700 hover:underline mt-1 cursor-pointer select-none" @click="addArtist.toggle = true">+ Add new artist</p>
+                                <div v-if="addArtist.toggle" class="pl-5 border-t border-b py-4 mt-5">
+                                    <div class="mb-4">
+                                        <label class="mr-2 font-medium text-sm tracking-wide text-purple-800 mt-4">Artist name:</label>
+                                        <input v-model="addArtist.artist.name" class="w-full block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-3 text-sm">
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="mr-2 font-medium text-sm tracking-wide text-purple-800 mt-4">Artist Description:</label>
+                                        <textarea v-model="addArtist.artist.desc" class="w-full block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-3 text-sm"></textarea>
+                                    </div>
+                                    <div class="flex justify-between mt-3">
+                                        <button class="text-sm p-2 bg-green-500 hover:bg-green-600 text-white my-2 rounded-lg px-5 transition duration-100">Save</button>
+                                        <button class="text-sm p-2 bg-red-500 hover:bg-red-600 text-white my-2 rounded-lg px-5 transition duration-100" @click="addArtist.toggle = false, addArtist.artist = {}">Cancel</button>
+                                    </div>
+                                </div>
                             </div>
                             <div class="mb-6">
                                 <label class="mr-2 font-medium text-sm tracking-wide text-purple-800">Stage:</label>
                                 <select v-model="performance.stage_id" class="w-full bg-white block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-2 text-sm">
                                     <option class="py-2" :value="stage.id" :key="stage.id" v-for="stage in $parent.getData().stages">{{ stage.name }}</option>
                                 </select>
+                                <p v-if="!addStage.toggle"  class="mr-2 font-medium text-sm tracking-wide text-purple-700 hover:underline mt-1 cursor-pointer select-none" @click="addStage.toggle = true">+ Add new Stage</p>
+                                <div v-if="addStage.toggle" class="pl-5 border-t border-b py-4 mt-5">
+                                    <div class="mb-4">
+                                        <label class="mr-2 font-medium text-sm tracking-wide text-purple-800 mt-4">Stage name:</label>
+                                        <input v-model="addStage.stage.name" class="w-full block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-3 text-sm">
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="mr-2 font-medium text-sm tracking-wide text-purple-800 mt-4">Stage Description:</label>
+                                        <textarea v-model="addStage.stage.desc" class="w-full block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-3 text-sm"></textarea>
+                                    </div>
+                                    <div class="flex justify-between mt-3">
+                                        <button class="text-sm p-2 bg-green-500 hover:bg-green-600 text-white my-2 rounded-lg px-5 transition duration-100">Save</button>
+                                        <button class="text-sm p-2 bg-red-500 hover:bg-red-600 text-white my-2 rounded-lg px-5 transition duration-100" @click="addStage.toggle = false, addStage.stage = {}">Cancel</button>
+                                    </div>
+                                </div>
                             </div>
                             <div class="mb-6">
                                 <label class="mr-2 font-medium text-sm tracking-wide text-purple-800">Time/Date:</label>
@@ -48,6 +78,14 @@
 export default {
     data(){
         return{
+            addArtist:{
+                toggle: false,
+                artist: {},
+            },
+            addStage:{
+                toggle: false,
+                stage: {},
+            },
             visible: false,
             performance:{
                 name: 'Enter performance name',
