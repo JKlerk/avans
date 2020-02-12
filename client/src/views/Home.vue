@@ -41,7 +41,7 @@
 				</div>
 				<!-- Body -->
 				<div class="flex flex-row just mt-10">
-					<div :key="artist.id" v-for="artist in getArtists()" class="shadow rounded-lg bg-white w-1/3 hover:opacity-50 transition duration-200 cursor-pointer mr-5" @click="$refs.performance.visible = true, $refs.performance.artist = artist, $refs.performance.performance = getSpecificPerformance(artist), $refs.performance.stage = getStage(artist)">
+					<div :key="artist.id" v-for="artist in getArtists()" class="shadow rounded-lg bg-white w-1/3 hover:opacity-50 transition duration-200 cursor-pointer mr-5" @click="$refs.performance.visible = true, $refs.performance.artist = artist, $refs.performance.performance = getSpecificPerformance(artist), $refs.performance.stage = getSpecificStage(artist)">
 						<div class="h-48 rounded-t-lg" style="background-image: url('https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60'); background-position: center; background-size: cover;">
 							<div class="flex p-4">
 								<div class="mt-1">

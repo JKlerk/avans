@@ -5,7 +5,7 @@
             <div class="flex justify-center">
                 <div class="z-40 bg-white w-1/3 fixed rounded-lg shadow overflow-auto mt-5 top-0" style="max-height: 600px">
                     <div class="shadow flex flex-col items-center justify-center p-10 rounded-t-lg relative select-none" style="height: 350px; background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(54, 13, 123, 0.8)), url(https://images.unsplash.com/photo-1464375117522-1311d6a5b81f?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=2250&amp;q=80);background-repeat: no-repeat;background-position: center center;">
-                        <div class="top-0 absolute left-0 text-white m-4 bg-purple-900 p-2 hover:bg-purple-800 cursor-pointer transition duration-100 rounded-full" @click="isEditing = !isEditing">
+                        <div class="top-0 absolute right-0 text-white m-4 bg-purple-900 p-2 hover:bg-purple-800 cursor-pointer transition duration-100 rounded-full" @click="isEditing = !isEditing">
                             <edit-2-icon class="" size="1.0x"></edit-2-icon>
                         </div>
                         <h1 class="font-bold text-3xl text-white">{{ performance.name }}</h1>

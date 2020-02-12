@@ -14,12 +14,12 @@
 				</div>
 			</div>
 			<!-- Body -->
-			<div class="flex flex-row just mt-10">
-				<div class="flex shadow rounded-lg bg-white w-1/2 hover:opacity-50 transition duration-200 cursor-pointer mr-5" :key="artist.id" v-for="artist in getArtists()">
+			<div class="flex flex-wrap mt-10">
+				<div class="flex shadow rounded-lg bg-white w-1/2 hover:opacity-50 transition duration-200 cursor-pointer mb-5" :key="artist.id" v-for="artist in getArtists()">
 					<div class="rounded-l-lg w-1/3" style="background-image: url('https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60'); background-position: center; background-size: cover;"></div>
 					<div class="py-10 w-2/3">
-						<h2 class="text-2xl ml-4 text-purple-700">Artist name</h2>
-						<p class="text-gray-700 ml-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, nostrum reprehenderit. Incidunt atque fugiat repellendus. Fugit veritatis consequuntur fuga hic</p>
+						<h2 class="text-2xl ml-4 text-purple-700">{{ artist.name }}</h2>
+						<p class="text-gray-700 ml-4">{{ artist.desc }}</p>
 					</div>
 				</div>
 				<div class="bg-white w-1/2 rounded-lg shadow h-auto flex items-center justify-center hover:bg-gray-100 cursor-pointer">
