@@ -18,7 +18,7 @@
                 </div>
                 <!-- Body -->
                 <div class="flex flex-wrap mt-10">
-                    <div class="flex shadow rounded-lg bg-white w-1/2 hover:opacity-50 transition duration-200 cursor-pointer mb-5" @click="$refs.editstage.visible = true, $refs.editstage.stage = stage" :key="stage.id" v-for="stage in getStages()">
+                    <div class="flex shadow rounded-lg bg-white w-1/2 hover:opacity-50 transition duration-200 cursor-pointer mb-5" @click="$refs.editstage.visible = true, $refs.editstage.stage = stage" :key="stage.id" v-for="stage in stages">
                         <div class="rounded-l-lg w-1/3" style="background-image: url('https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60'); background-position: center; background-size: cover;"></div>
                         <div class="py-10 w-2/3">
                             <h2 class="text-2xl ml-4 text-purple-700">{{ stage.name }}</h2>
@@ -37,7 +37,8 @@
 import { SearchIcon } from 'vue-feather-icons'
 import CreateStage from '@/components/Stage/CreateStage'
 import EditStage from '@/components/Stage/EditStage'
-import stagesData from '@/stages.json'
+import api from '@/api/stages.js'
+// import stagesData from '@/stages.json'
 
 export default {
 	components:{
@@ -45,10 +46,15 @@ export default {
         CreateStage,
         EditStage,
 	},
-	methods:{
-		getStages(){
-			return stagesData
-		}
-	}
+    data(){
+        return{
+            stages: {}
+        }
+    },
+    created(){
+		api.getStages().then((response) => {
+			this.stages = response.data
+		})
+	},
 }
 </script>

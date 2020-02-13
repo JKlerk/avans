@@ -7,6 +7,10 @@ import Stages from '../views/Stages.vue'
 Vue.use(VueRouter)
 
 const routes = [
+  { 
+    path: '/', 
+    redirect: '/home' 
+  },
   {
     path: '/home',
     name: 'home',
