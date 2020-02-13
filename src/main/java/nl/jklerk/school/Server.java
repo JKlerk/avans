@@ -41,13 +41,10 @@ public class Server {
         final var response = endpoints.getOrDefault(exchange.getRequestMethod() + exchange.getRequestURI().toString(), () -> new Response(404, "", Collections.emptyMap())).get();
 
         try {
-            exchange.sendResponseHeaders(response.getCode(), response.getBody().getBytes().length);
-            exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
-            exchange.getResponseHeaders().add("Content-Type", "application/json");
-
-            for (final var header : response.getHeaders().entrySet()) {
-                exchange.getResponseHeaders().add(header.getKey(), header.getValue());
-            }
+            exchange.getResponseHeaders().set("Access-Control-Allow-Headers", "*");
+            exchange.getResponseHeaders().set("Access-Control-Allow-Origin", "*");
+            exchange.getResponseHeaders().set("Content-Type", "application/json");
+            exchange.sendResponseHeaders(200, response.getBody().getBytes().length);
 
             final var os = exchange.getResponseBody();
             os.write(response.getBody().getBytes());
