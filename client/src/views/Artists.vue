@@ -37,7 +37,6 @@
 import { SearchIcon } from 'vue-feather-icons'
 import CreateArtist from '@/components/Artist/CreateArtist'
 import EditArtist from '@/components/Artist/EditArtist'
-import artistsData from '@/artists.json'
 import api from '@/api/artists.js'
 
 export default {

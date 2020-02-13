@@ -38,7 +38,6 @@ import { SearchIcon } from 'vue-feather-icons'
 import CreateStage from '@/components/Stage/CreateStage'
 import EditStage from '@/components/Stage/EditStage'
 import api from '@/api/stages.js'
-// import stagesData from '@/stages.json'
 
 export default {
 	components:{

@@ -23,18 +23,18 @@
                             <div class="mb-6">
                                 <label class="mr-2 font-medium text-sm tracking-wide text-purple-800">Artist:</label>
                                 <select v-model="performance.artist_id" class="w-full bg-white block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-2 text-sm">
-                                    <option :value="artist.id" :key="artist.id" v-for="artist in $parent.getArtists()">{{ artist.name }}</option>
+                                    <option :value="artist.id" :key="artist.id" v-for="artist in $parent.artists">{{ artist.name }}</option>
                                 </select>
                             </div>
                             <div class="mb-6">
                                 <label class="mr-2 font-medium text-sm tracking-wide text-purple-800">Stage:</label>
                                 <select v-model="performance.stage_id" class="w-full bg-white block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-2 text-sm">
-                                    <option class="py-2" :value="stage.id" :key="stage.id" v-for="stage in $parent.getStages()">{{ stage.name }}</option>
+                                    <option class="py-2" :value="stage.id" :key="stage.id" v-for="stage in $parent.stages">{{ stage.name }}</option>
                                 </select>
                             </div>
                             <div class="mb-6">
                                 <label class="mr-2 font-medium text-sm tracking-wide text-purple-800">Time/Date:</label>
-                                <input v-model="performance.date" type="datetime-local" class="w-full block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-3 text-sm" id="birthdaytime" name="birthdaytime">
+                                <input v-model="performance.date" type="datetime-local" class="w-full block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-3 text-sm">
                             </div>
                             <div class="mb-2">
                                 <p class="font-medium text-sm tracking-wide text-purple-800 hover:underline cursor-pointer select-none" @click="confirm = true">Delete performance</p>

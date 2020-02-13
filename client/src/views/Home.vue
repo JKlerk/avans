@@ -14,7 +14,7 @@
 							<div class="my-auto mr-3">
 								<search-icon size="1.0x" />
 							</div>
-							<input placeholder="Search for events" class="appearance-none focus:outline-none w-full">
+							<input v-model="search" placeholder="Search for events" class="appearance-none focus:outline-none w-full">
 						</div>
 						<!-- TODO SORTING -->
 						<div class="w-2/12 text-center bg-white block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-2 text-sm mx-2 flex">
@@ -30,35 +30,35 @@
 						<select class="w-2/12 text-center bg-white block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-2 text-sm mx-2">
 							<option selected disabled>Select an artist</option>
 							<option>None</option>
-							<option :key="artist.id" v-for="artist in getArtists()">{{ artist.name }}</option>
+							<option :key="artist.id" v-for="artist in artists">{{ artist.name }}</option>
 						</select>
 						<select class="w-2/12 text-center bg-white block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-2 text-sm mx-2">
 							<option selected disabled>Select a stage</option>
 							<option>None</option>
-							<option :key="stage.id" v-for="stage in getStages()">{{ stage.name }}</option>
+							<option :key="stage.id" v-for="stage in stages">{{ stage.name }}</option>
 						</select>
 					</div>
 				</div>
 				<!-- Body -->
 				<div class="flex flex-row just mt-10">
-					<div :key="artist.id" v-for="artist in getArtists()" class="shadow rounded-lg bg-white w-1/3 hover:opacity-50 transition duration-200 cursor-pointer mr-5" @click="$refs.performance.visible = true, $refs.performance.artist = artist, $refs.performance.performance = getSpecificPerformance(artist), $refs.performance.stage = getSpecificStage(artist)">
+					<div :key="performance.id" v-for="performance in performances" class="shadow rounded-lg bg-white w-1/3 hover:opacity-50 transition duration-200 cursor-pointer mr-5" @click="$refs.performance.visible = true, $refs.performance.artist = getSpecificArtist(performance), $refs.performance.performance = performance, $refs.performance.stage = getSpecificStage(performance)">
 						<div class="h-48 rounded-t-lg" style="background-image: url('https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60'); background-position: center; background-size: cover;">
 							<div class="flex p-4">
 								<div class="mt-1">
-									<span class="px-4 py-2 text-sm shadow bg-white rounded-lg font-bold">{{ getSpecificPerformance(artist).time }}</span>
+									<span class="px-4 py-2 text-sm shadow bg-white rounded-lg font-bold">{{ performance.time }}</span>
 								</div>
 								<div class="flex flex-1 justify-end">
-									<span class="px-4 py-2 text-sm shadow bg-white rounded-lg font-bold text-purple-600">{{ getSpecificStage(artist).name }}</span>
+									<span class="px-4 py-2 text-sm shadow bg-white rounded-lg font-bold text-purple-600">{{ getSpecificStage(performance).name }}</span>
 								</div>
 							</div>
 						</div>
 						<div class="flex py-10">
 							<div class="ml-4 mr-8">
-								<p class="text-sm text-purple-600">{{ getDate(artist).month }}</p>
-								<p class="font-bold mt-3">{{ getDate(artist).day }}</p>
+								<p class="text-sm text-purple-600">{{ getDate(performance).month }}</p>
+								<p class="font-bold mt-3">{{ getDate(performance).day }}</p>
 							</div>
 							<div>
-								<h1 class="font-medium mb-2">{{ artist.name }} - {{ getSpecificPerformance(artist).name }}</h1>
+								<h1 class="font-medium mb-2">{{ getSpecificArtist(performance).name }} - {{ performance.name }}</h1>
 								<p class="text-sm text-gray-700">Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
 							</div>
 						</div>
@@ -86,17 +86,24 @@ import performancesData from '@/performances.json'
 import stagesData from '@/stages.json'
 
 export default {
+	data(){
+		return{
+			artists: artistsData,
+			stages: stagesData,
+			performances: performancesData,
+			search: ''
+		}
+	},
 	components:{
 		Performance,
 		CreatePerformance,
 		SearchIcon,
 	},
 	methods:{
-		getDate(artist){
+		getDate(performance){
 			const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
   				"Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
 			];
-			var performance = this.getSpecificPerformance(artist);
 			var fullDate = performance.date.split('-');
 			let month = String
 			let day = String
@@ -118,23 +125,13 @@ export default {
 			return{ month: month, day: day }
 		},	
 
-		getSpecificPerformance(artist){
-			return this.getPerformances().find(element => element.artist_id === artist.id)
+		getSpecificStage(performance){
+			return this.stages.find(element => element.id === performance.stage_id)
 		},
 
-		getSpecificStage(artist){
-			var performance = this.getSpecificPerformance(artist);
-			return this.getStages().find(element => element.id === performance.stage_id)
-		},
-		getArtists(){
-			return artistsData;
-		},
-		getStages(){
-			return stagesData;
-		},
-		getPerformances(){
-			return performancesData;
-		},
+		getSpecificArtist(performance){
+			return this.artists.find(element => element.id === performance.artist_id);
+		}
 	},
 	created(){
 		var d = new Date()
@@ -144,7 +141,12 @@ export default {
 		// var time = d.getHours() + ':' + d.getMinutes()
 		// console.log(time)
 		// console.log(year[0].split('-'))
-	}
+	},
+	computed:{
+		filterdPerformances(){
+			
+		}
+	},
 }
 </script>
 
