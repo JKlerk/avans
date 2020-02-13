@@ -18,7 +18,7 @@
 				</div>
 				<!-- Body -->
 				<div class="flex flex-wrap mt-10">
-					<div class="flex shadow rounded-lg bg-white w-1/2 hover:opacity-50 transition duration-200 cursor-pointer mb-5" :key="artist.id" v-for="artist in artists" @click="$refs.editartist.visible = true, $refs.editartist.artist = artist">
+					<div class="flex shadow rounded-lg bg-white w-1/2 hover:opacity-50 transition duration-200 cursor-pointer mb-5" :key="artist.id" v-for="artist in this.$store.state.artists" @click="$refs.editartist.visible = true, $refs.editartist.artist = artist">
 						<div class="rounded-l-lg w-1/3" style="background-image: url('https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60'); background-position: center; background-size: cover;"></div>
 						<div class="py-10 w-2/3">
 							<h2 class="text-2xl ml-4 text-purple-700">{{ artist.name }}</h2>
@@ -45,15 +45,12 @@ export default {
 		CreateArtist,
 		EditArtist
 	},
-	data(){
-		return{
-			artists: {}
-		}
-	},
 	created(){
-		api.getArtists().then((response) => {
-			this.artists = response.data
-		})
+		if(Object.keys(this.$store.state.artists).length === 0){
+			api.getArtists().then((response) => {
+				this.$store.state.artists = response.data
+			})
+		}
 	},
 }
 </script>
