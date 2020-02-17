@@ -48,7 +48,7 @@
 									<span class="px-4 py-2 text-sm shadow bg-white rounded-lg font-bold">{{ performance.time }}</span>
 								</div>
 								<div class="flex flex-1 justify-end">
-									<span class="px-4 py-2 text-sm shadow bg-white rounded-lg font-bold text-purple-600">{{ getSpecificStage(performance).name }}</span>
+									<span class="px-4 py-2 text-sm shadow bg-white rounded-lg font-bold text-purple-600">{{ getSpecificStage(performance) }}</span>
 								</div>
 							</div>
 						</div>
@@ -85,11 +85,14 @@ import artistsData from '@/artists.json'
 import performancesData from '@/performances.json'
 import stagesData from '@/stages.json'
 
+import artistsAPI from '@/api/artists'
+import stagesAPI from '@/api/stages'
+
 export default {
 	data(){
 		return{
-			artists: artistsData,
-			stages: stagesData,
+			artists: [],
+			stages: [],
 			performances: performancesData,
 			search: ''
 		}
@@ -126,21 +129,22 @@ export default {
 		},	
 
 		getSpecificStage(performance){
+			if (this.stages.length === 0) return []
 			return this.stages.find(element => element.id === performance.stage_id)
 		},
 
 		getSpecificArtist(performance){
+			if (this.artists.length === 0) return []
 			return this.artists.find(element => element.id === performance.artist_id);
-		}
+		},
 	},
-	created(){
-		var d = new Date()
-		var year = d.toISOString().split('T')
-		var year2 = '2020-02-10T03:00 '.split('T')
-		// console.log(year2)
-		// var time = d.getHours() + ':' + d.getMinutes()
-		// console.log(time)
-		// console.log(year[0].split('-'))
+	async created(){
+		await artistsAPI.getArtists().then((response) => {
+			this.artists = response.data
+		})
+		await stagesAPI.getStages().then((response) => {
+			this.stages = response.data
+		})
 	},
 	computed:{
 		filterdPerformances(){
@@ -153,12 +157,10 @@ export default {
 <style scoped>
 	#gradient{
 		background: #D3CCE3;
-		/* background: -webkit-linear-gradient(-90deg, rgb(89, 0, 212), rgb(255, 94, 0)); */
-		  background-attachment: fixed;
+		background-attachment: fixed;
 		background-position: center;
 		background-repeat: no-repeat;
 		background-size: cover;
 		background: -webkit-linear-gradient(90deg, #E9E4F0, rgb(253, 253, 255));
-		/* background: linear-gradient(45deg, #E9E4F0, #D3CCE3); */
 	}
 </style>

@@ -23,7 +23,7 @@
                             </div>
                         </div>
                         <div class="flex mt-5 items-center justify-between bg-purple-100 border-t-2 border-purple-200 px-8 py-6 -m-6 rounded-b-lg">
-                            <button class="text-white bg-purple-500 hover:bg-purple-600 rounded-full px-8 py-2 text-sm font-semibold transition duration-100 focus:outline-none">Add</button>
+                            <button @click="submit()" class="text-white bg-purple-500 hover:bg-purple-600 rounded-full px-8 py-2 text-sm font-semibold transition duration-100 focus:outline-none">Add</button>
                             <button @click="visible = false, artist = { name: 'Please enter a name'}" class="text-purple-100 bg-purple-700 hover:bg-purple-800 rounded-full px-8 py-2 text-sm font-semibold transition duration-100 focus:outline-none">Close</button>
                         </div>
                     </div>
@@ -35,6 +35,7 @@
 
 <script>
 import { Edit2Icon } from 'vue-feather-icons'
+import api from '@/api/artists.js'
 export default {
     data(){
         return{
@@ -46,6 +47,13 @@ export default {
     },
     components:{
         Edit2Icon,
+    },
+    methods:{
+        submit(){
+            api.addArtist(this.artist).then((response) => {
+				console.log(response);
+			})
+        }
     },
 }
 </script>

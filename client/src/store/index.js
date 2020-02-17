@@ -5,8 +5,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    artists: {},
-    stages: {},
+    artists: [],
+    stages: [],
   },
   mutations: {
   },

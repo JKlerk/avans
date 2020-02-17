@@ -9,28 +9,24 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Database {
-    private Connection connection;
 
-    public Database() {
+    private static Connection connection;
+
+    public Database connect(String type, String username, String password, String url, String port, String database){
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/avans?user=root&password=password");
+            connection = DriverManager.getConnection("jdbc:mysql://"+ url + ":" + port + "/" + database + "?" + "user=" + username + "&password=" + password);
+            System.out.println("[" + type + "] " + "Connected to DB");
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.exit(-1);
+            System.out.println("Connection to DB failed - " + e);
         }
+        return this;
     }
 
-    public String query(String sql) {
-        try {
-            ResultSet result = connection.createStatement().executeQuery(sql);
-            return String.valueOf(getJsonFromResultSet(result));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return "";
+    public static Connection connect(){
+        return connection;
     }
 
-    public static JSONArray getJsonFromResultSet(ResultSet resultSet) {
+    public static JSONArray createJson(ResultSet resultSet) {
         JSONArray array = new JSONArray();
         try {
             if (!resultSet.isBeforeFirst()) {

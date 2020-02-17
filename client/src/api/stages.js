@@ -7,6 +7,6 @@ const client = axios.create({
 
 export default {
     getStages(params) {
-      return client.get('stages', params);
+      return client.get('getstages', params);
     },
 };

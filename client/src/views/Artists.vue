@@ -45,9 +45,9 @@ export default {
 		CreateArtist,
 		EditArtist
 	},
-	created(){
+	async created(){
 		if(Object.keys(this.$store.state.artists).length === 0){
-			api.getArtists().then((response) => {
+			await api.getArtists().then((response) => {
 				this.$store.state.artists = response.data
 			})
 		}

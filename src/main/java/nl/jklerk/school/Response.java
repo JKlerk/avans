@@ -1,39 +1,36 @@
 package nl.jklerk.school;
 
-import java.util.Collections;
-import java.util.Map;
+
+import com.sun.net.httpserver.Headers;
+import com.sun.net.httpserver.HttpExchange;
+
+import java.io.IOException;
+import java.io.OutputStream;
 
 public class Response {
     private int code;
-    private final String body;
-    private final Map<String, String> headers;
+    private String body;
 
     public Response() {
         this.code = 404;
         this.body = "";
-        this.headers = Collections.emptyMap();
     }
 
-    public Response(int code, String body, Map<String, String> headers) {
+    public Response(int code, String body) {
         this.code = code;
         this.body = body;
-        this.headers = headers;
     }
 
-    public Response withBody(String body) {
-        return new Response(this.code, body, this.headers);
+    public void sendBody(HttpExchange exc) throws IOException {
+
+        Headers headers = exc.getResponseHeaders();
+        headers.set("Access-Control-Allow-Headers","*");
+        headers.set("Access-Control-Allow-Origin","*");
+
+        exc.sendResponseHeaders(this.code, this.body.length());
+        OutputStream os = exc.getResponseBody();
+        os.write(this.body.getBytes());
+        os.close();
     }
 
-    public Response addHeader(String key, String value) {
-        this.headers.putIfAbsent(key, value);
-        return new Response(this.code, this.body, this.headers);
-    }
-
-    public String getBody() {
-        return body;
-    }
-
-    public Map<String, String> getHeaders() {
-        return headers;
-    }
 }

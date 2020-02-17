@@ -7,6 +7,9 @@ const client = axios.create({
 
 export default {
     getArtists(params) {
-      return client.get('artists', params);
+      return client.get('getartists', params);
+    },
+    addArtist(params) {
+      return client.post('addartist', params);
     },
 };
