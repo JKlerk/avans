@@ -50,8 +50,11 @@ export default {
     },
     methods:{
         submit(){
-            api.addArtist(this.artist).then((response) => {
-				console.log(response);
+            api.addArtist(JSON.stringify(this.artist)).then((response) => {
+				if(response.data = "Success"){
+                    this.$store.state.artists.push(this.artist);
+                    this.visible = false;
+                }
 			})
         }
     },

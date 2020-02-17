@@ -1,14 +1,11 @@
 package nl.jklerk.school.Controllers;
 
-import com.google.gson.Gson;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.sun.net.httpserver.HttpExchange;
 import nl.jklerk.school.Database;
 import nl.jklerk.school.Request;
 import nl.jklerk.school.Response;
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.sql.PreparedStatement;
@@ -38,20 +35,23 @@ public class ArtistController {
         String data = Request.getRequestBody(exc);
 
         System.out.println(data);
-        JSONObject json = null;
+
+        var name = new JsonMapper().readTree(data).get("name").asText();
+        var desc = new JsonMapper().readTree(data).get("desc").asText();
 
         try {
-            JSONParser parser = new JSONParser();
+            String sql = "INSERT INTO artists (name, description) VALUES (?,?)";
+            PreparedStatement preparedStatement = Database.connect().prepareStatement(sql);
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, desc);
+            preparedStatement.executeUpdate();
 
-            json = (JSONObject) parser.parse(data);
-        } catch (ParseException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-
-//        String name = (String) json.get("name");
-//
-        var res = new Response(200, "name");
+        var res = new Response(200, "Success");
         res.sendBody(exc);
+
     }
 }
 
