@@ -15,7 +15,7 @@ public class PerformanceController {
 
         JSONArray data = new JSONArray();
         try {
-            String sql = "SELECT * FROM artists";
+            String sql = "SELECT * FROM performances";
             PreparedStatement preparedStatement = Database.connect().prepareStatement(sql);
             ResultSet rs = preparedStatement.executeQuery();
             data = Database.createJson(rs);
@@ -23,7 +23,6 @@ public class PerformanceController {
             e.printStackTrace();
         }
         var res = new Response(200, data.toString());
-
         res.sendBody(exc);
     }
 }

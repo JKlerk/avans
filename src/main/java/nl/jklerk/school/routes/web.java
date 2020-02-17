@@ -3,6 +3,7 @@ package nl.jklerk.school.routes;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import nl.jklerk.school.Controllers.ArtistController;
+import nl.jklerk.school.Controllers.PerformanceController;
 import nl.jklerk.school.Controllers.StageController;
 
 public class web {
@@ -23,6 +24,9 @@ public class web {
         route("/api/editstage", StageController::editStage);
         route("/api/deletestage", StageController::deleteStage);
 
+
+        // Performances routing
+        route("/api/getperformances", PerformanceController::getPerformances);
     }
 
     //    Sets route with controller

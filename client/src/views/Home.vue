@@ -86,13 +86,14 @@ import performancesData from '@/performances.json'
 
 import artistsAPI from '@/api/artists'
 import stagesAPI from '@/api/stages'
+import performanceAPI from '@/api/performances'
 
 export default {
 	data(){
 		return{
 			artists: [],
 			stages: [],
-			performances: performancesData,
+			performances: [],
 			search: '',
 			loadedStage: false,
 			loadedArtist: false
@@ -145,6 +146,9 @@ export default {
 		}
 	},
 	created(){
+		performanceAPI.getPerformances().then((response) => {
+			this.performances = response.data
+		})
 		artistsAPI.getArtists().then((response) => {
 			this.artists = response.data
 			this.loadedArtist = true;
