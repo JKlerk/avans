@@ -11,13 +11,18 @@ public class web {
     public static void setRouters(HttpServer server){
         httpServer = server;
 
-        // Get routing
+        // Artist routing
         route("/api/getartists", ArtistController::getArtists);
-        route("/api/getstages", StageController::getStages);
-
-        // Post routing
         route("/api/addartist", ArtistController::postArtist);
         route("/api/editartist", ArtistController::editArtist);
+        route("/api/deleteartist", ArtistController::deleteArtist);
+
+        // Stage routing
+        route("/api/getstages", StageController::getStages);
+        route("/api/addstage", StageController::postStage);
+        route("/api/editstage", StageController::editStage);
+        route("/api/deletestage", StageController::deleteStage);
+
     }
 
     //    Sets route with controller

@@ -54,7 +54,6 @@ public class ArtistController {
 
     public static void editArtist(HttpExchange exc) throws IOException {
         String data = Request.getRequestBody(exc);
-        System.out.println(data);
         var id = new JsonMapper().readTree(data).get("id").asText();
         var name = new JsonMapper().readTree(data).get("name").asText();
         var desc = new JsonMapper().readTree(data).get("description").asText();
@@ -65,6 +64,24 @@ public class ArtistController {
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, desc);
             preparedStatement.setString(3, id);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        var res = new Response(200, "Success");
+        res.sendBody(exc);
+
+    }
+
+    public static void deleteArtist(HttpExchange exc) throws IOException {
+        String data = Request.getRequestBody(exc);
+        var id = new JsonMapper().readTree(data).get("id").asText();
+
+        try {
+            String sql = "DELETE FROM artists WHERE id=?;";
+            PreparedStatement preparedStatement = Database.connect().prepareStatement(sql);
+            preparedStatement.setString(1, id);
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {

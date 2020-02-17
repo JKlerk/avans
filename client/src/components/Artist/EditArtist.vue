@@ -8,17 +8,20 @@
                         <h1 class="font-bold text-3xl text-white">{{ artist.name }}</h1>
                     </div>
                     <div class="p-6">
-                        <div class="mx-6 mb-6 py-4 mt-5">
+                        <div class="mx-6 mb-2 py-4 mt-5">
                             <div class="mb-4">
                                 <label class="mr-2 font-medium text-sm tracking-wide text-purple-800 mt-4">Artist name:</label>
                                 <input v-model="artist.name" class="w-full block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-3 text-sm">
                             </div>
-                            <div class="mb-4">
+                            <div class="mb-8">
                                 <label class="mr-2 font-medium text-sm tracking-wide text-purple-800 mt-4">Artist Description:</label>
                                 <textarea rows="5" style="min-height: 20px;" v-model="artist.description" class="w-full block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-4 text-sm"></textarea>
                             </div>
+                            <div>
+                                <button @click="remove" class="bg-red-500 hover:bg-red-600 duration-100 transition text-white py-2 rounded shadow text-sm px-5">Delete Artist</button>
+                            </div>
                         </div>
-                        <div class="flex mt-5 items-center justify-between bg-purple-100 border-t-2 border-purple-200 px-8 py-6 -m-6 rounded-b-lg">
+                        <div class="flex mt-1 items-center justify-between bg-purple-100 border-t-2 border-purple-200 px-8 py-6 -m-6 rounded-b-lg">
                             <button @click="submit" class="text-white bg-purple-500 hover:bg-purple-600 rounded-full px-8 py-2 text-sm font-semibold transition duration-100 focus:outline-none">Save</button>
                             <button @click="visible = false, artist = {}" class="text-purple-100 bg-purple-700 hover:bg-purple-800 rounded-full px-8 py-2 text-sm font-semibold transition duration-100 focus:outline-none">Close</button>
                         </div>
@@ -41,6 +44,16 @@ export default {
         submit(){     
             api.editArtist(JSON.stringify(this.artist)).then((response) => {
 				if(response.data = "Success"){
+                    this.visible = false;
+                }
+			})   
+        },
+        remove(){
+            api.deleteArtist(JSON.stringify(this.artist)).then((response) => {
+				if(response.data = "Success"){
+                    this.$store.state.artists = this.$store.state.artists.filter(oldArtist => {
+                        return !(oldArtist.id === this.artist.id)
+                    });
                     this.visible = false;
                 }
 			})   

@@ -1,7 +1,9 @@
 package nl.jklerk.school.Controllers;
 
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.sun.net.httpserver.HttpExchange;
 import nl.jklerk.school.Database;
+import nl.jklerk.school.Request;
 import nl.jklerk.school.Response;
 import org.json.simple.JSONArray;
 
@@ -24,5 +26,66 @@ public class StageController {
         }
         var res = new Response(200, data.toString());
         res.sendBody(exc);
+    }
+
+    public static void postStage(HttpExchange exc) throws IOException {
+        String data = Request.getRequestBody(exc);
+        var name = new JsonMapper().readTree(data).get("name").asText();
+        var desc = new JsonMapper().readTree(data).get("description").asText();
+
+        try {
+            String sql = "INSERT INTO stages (name, description) VALUES (?,?)";
+            PreparedStatement preparedStatement = Database.connect().prepareStatement(sql);
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, desc);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        var res = new Response(200, "Success");
+        res.sendBody(exc);
+
+    }
+
+    public static void editStage(HttpExchange exc) throws IOException {
+        String data = Request.getRequestBody(exc);
+        System.out.println(data);
+        var id = new JsonMapper().readTree(data).get("id").asText();
+        var name = new JsonMapper().readTree(data).get("name").asText();
+        var desc = new JsonMapper().readTree(data).get("description").asText();
+
+        try {
+            String sql = "UPDATE stages SET name = ?, description = ? WHERE id=?;";
+            PreparedStatement preparedStatement = Database.connect().prepareStatement(sql);
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, desc);
+            preparedStatement.setString(3, id);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        var res = new Response(200, "Success");
+        res.sendBody(exc);
+
+    }
+
+    public static void deleteStage(HttpExchange exc) throws IOException {
+        String data = Request.getRequestBody(exc);
+        var id = new JsonMapper().readTree(data).get("id").asText();
+
+        try {
+            String sql = "DELETE FROM stages WHERE id=?;";
+            PreparedStatement preparedStatement = Database.connect().prepareStatement(sql);
+            preparedStatement.setString(1, id);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        var res = new Response(200, "Success");
+        res.sendBody(exc);
+
     }
 }

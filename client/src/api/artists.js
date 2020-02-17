@@ -16,4 +16,7 @@ export default {
     editArtist(params) {
       return client.post('editartist', params);
     },
+    deleteArtist(params) {
+      return client.post('deleteartist', params);
+    },
 };
