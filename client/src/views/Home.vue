@@ -4,8 +4,8 @@
 		<Performance ref="performance" />
 		<CreatePerformance ref="createperformance"/>
 
-		<div class="flex justify-center pt-5 pb-10">
-			<div class="mx-20 w-2/3">
+		<div v-if="loadedStage" class="flex justify-center pt-5 pb-10">
+			<div v-if="loadedArtist" class="mx-20 w-2/3">
 				<!-- Header -->
 				<div class="flex">
 					<h1 class="text-3xl font-bold">Upcoming Events</h1>
@@ -58,7 +58,7 @@
 								<p class="font-bold mt-3">{{ getDate(performance).day }}</p>
 							</div>
 							<div>
-								<h1 class="font-medium mb-2">{{ getSpecificArtist(performance).name }} - {{ performance.name }}</h1>
+								<h1 class="font-medium mb-2">{{ getSpecificArtist(performance) }} - {{ performance.name }}</h1>
 								<p class="text-sm text-gray-700">Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
 							</div>
 						</div>
@@ -81,9 +81,8 @@ import Performance from '@/components/Performance/Performance'
 import CreatePerformance from '@/components/Performance/CreatePerformance'
 
 // Json files
-import artistsData from '@/artists.json'
 import performancesData from '@/performances.json'
-import stagesData from '@/stages.json'
+
 
 import artistsAPI from '@/api/artists'
 import stagesAPI from '@/api/stages'
@@ -94,7 +93,9 @@ export default {
 			artists: [],
 			stages: [],
 			performances: performancesData,
-			search: ''
+			search: '',
+			loadedStage: false,
+			loadedArtist: false
 		}
 	},
 	components:{
@@ -128,28 +129,30 @@ export default {
 			return{ month: month, day: day }
 		},	
 
-		getSpecificStage(performance){
-			if (this.stages.length === 0) return []
-			return this.stages.find(element => element.id === performance.stage_id)
-		},
-
 		getSpecificArtist(performance){
-			if (this.artists.length === 0) return []
-			return this.artists.find(element => element.id === performance.artist_id);
+			if(this.artists){
+				return this.artists.find(element => element.id === performance.artist_id).name;
+			} else{
+				return 'undefined'
+			}
 		},
-	},
-	async created(){
-		await artistsAPI.getArtists().then((response) => {
-			this.artists = response.data
-		})
-		await stagesAPI.getStages().then((response) => {
-			this.stages = response.data
-		})
-	},
-	computed:{
-		filterdPerformances(){
-			
+		getSpecificStage(performance){
+			if(this.stages){
+				return this.stages.find(element => element.id === performance.stage_id).name;
+			} else{
+				return 'undefined'
+			}
 		}
+	},
+	created(){
+		artistsAPI.getArtists().then((response) => {
+			this.artists = response.data
+			this.loadedArtist = true;
+		})
+		stagesAPI.getStages().then((response) => {
+			this.stages = response.data
+			this.loadedStage = true;
+		})
 	},
 }
 </script>
