@@ -34,16 +34,37 @@ public class ArtistController {
     public static void postArtist(HttpExchange exc) throws IOException {
         String data = Request.getRequestBody(exc);
 
-        System.out.println(data);
-
         var name = new JsonMapper().readTree(data).get("name").asText();
-        var desc = new JsonMapper().readTree(data).get("desc").asText();
+        var desc = new JsonMapper().readTree(data).get("description").asText();
 
         try {
             String sql = "INSERT INTO artists (name, description) VALUES (?,?)";
             PreparedStatement preparedStatement = Database.connect().prepareStatement(sql);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, desc);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        var res = new Response(200, "Success");
+        res.sendBody(exc);
+
+    }
+
+    public static void editArtist(HttpExchange exc) throws IOException {
+        String data = Request.getRequestBody(exc);
+        System.out.println(data);
+        var id = new JsonMapper().readTree(data).get("id").asText();
+        var name = new JsonMapper().readTree(data).get("name").asText();
+        var desc = new JsonMapper().readTree(data).get("description").asText();
+
+        try {
+            String sql = "UPDATE artists SET name = ?, description = ? WHERE id=?;";
+            PreparedStatement preparedStatement = Database.connect().prepareStatement(sql);
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, desc);
+            preparedStatement.setString(3, id);
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {

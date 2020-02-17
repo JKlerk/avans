@@ -30,7 +30,7 @@
                                     </div>
                                     <div class="mb-4">
                                         <label class="mr-2 font-medium text-sm tracking-wide text-purple-800 mt-4">Artist Description:</label>
-                                        <textarea v-model="addArtist.artist.desc" class="w-full block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-3 text-sm"></textarea>
+                                        <textarea v-model="addArtist.artist.description" class="w-full block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-3 text-sm"></textarea>
                                     </div>
                                     <div class="flex justify-between mt-3">
                                         <button class="text-sm p-2 bg-green-500 hover:bg-green-600 text-white my-2 rounded-lg px-5 transition duration-100">Save</button>

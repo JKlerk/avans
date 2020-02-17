@@ -22,7 +22,7 @@
                         <div class="rounded-l-lg w-1/3" style="background-image: url('https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60'); background-position: center; background-size: cover;"></div>
                         <div class="py-10 w-2/3">
                             <h2 class="text-2xl ml-4 text-purple-700">{{ stage.name }}</h2>
-                            <p class="text-gray-700 ml-4">{{ stage.desc }}</p>
+                            <p class="text-gray-700 ml-4">{{ stage.description }}</p>
                         </div>
                     </div>
                     <div @click="$refs.createstage.visible = true" class="bg-white w-1/2 rounded-lg shadow h-auto flex items-center justify-center hover:bg-gray-100 cursor-pointer">

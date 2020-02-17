@@ -17,6 +17,7 @@ public class web {
 
         // Post routing
         route("/api/addartist", ArtistController::postArtist);
+        route("/api/editartist", ArtistController::editArtist);
     }
 
     //    Sets route with controller

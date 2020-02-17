@@ -11,7 +11,9 @@ export default {
       return client.get('getartists', params);
     },
     addArtist(params) {
-      // console.log(params);
       return client.post('addartist', params);
+    },
+    editArtist(params) {
+      return client.post('editartist', params);
     },
 };
