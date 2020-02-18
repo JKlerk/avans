@@ -13,7 +13,7 @@
                                 <div class="py-4 mt-5">
                                     <div class="mb-4">
                                         <label class="mr-2 font-medium text-sm tracking-wide text-purple-800 mt-4">Stage name:</label>
-                                        <input v-model="stage.name" class="w-full block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-3 text-sm">
+                                        <input v-if="stage.name " v-model="stage.name" class="w-full block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-3 text-sm">
                                     </div>
                                     <div class="mb-4">
                                         <label class="mr-2 font-medium text-sm tracking-wide text-purple-800 mt-4">Stage Description:</label>
@@ -40,6 +40,7 @@ export default {
     data(){
         return{
             visible: false,
+            errors: [],
             stage: {
                 name: 'Please enter a name'
             },
@@ -50,13 +51,23 @@ export default {
     },
     methods:{
         submit(){
-            api.addStage(JSON.stringify(this.stage)).then((response) => {
-				if(response.data){
-                    this.stage.id = response.data[0].GENERATED_KEY;
-                    this.$store.state.stages.push(this.stage);
-                    this.visible = false;
+            if(stage.name === ''){
+                var error = {
+                    name: 'name',
+                    message: 'The stage field is required'
                 }
-			})
+                this.errors.push(error)   
+            }
+
+            if(errors.length === 0){
+                api.addStage(JSON.stringify(this.stage)).then((response) => {
+                    if(response.data){
+                        this.stage.id = response.data[0].GENERATED_KEY;
+                        this.$store.state.stages.push(this.stage);
+                        this.visible = false;
+                    }
+                })
+            }
         }
     },
 }
