@@ -14,23 +14,27 @@
                         <div class="mx-6">
                             <div class="mb-6">
                                 <label class="mr-2 font-medium text-sm tracking-wide text-purple-800">Performance name:</label>
-                                <input v-model="performance.name" autofocus class="w-full block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-3 text-sm">
+                                <input @click="deleteError('name')" v-model="performance.name" autofocus :class="{ 'border-red-500' : hasError('name'), 'border-purple-200' : !hasError('name') }" class="w-full block mt-2 rounded-lg border focus:outline-none appearance-none px-2 py-2 leading-3 text-sm">
+                                <p class="text-sm text-red-500" v-if="hasError('name')">{{ hasError('name').message }}</p>
                             </div>
                             <div class="mb-6">
                                 <label class="mr-2 font-medium text-sm tracking-wide text-purple-800">Artist:</label>
-                                <select v-model="performance.artist_id" class="w-full bg-white block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-2 text-sm">
+                                <select @click="deleteError('artist_id')" v-model="performance.artist_id" :class="{ 'border-red-500' : hasError('artist_id'), 'border-purple-200' : !hasError('artist_id') }" class="w-full bg-white block mt-2 rounded-lg border focus:outline-none appearance-none px-2 py-2 leading-2 text-sm">
                                     <option selected disabled>Please select an artist</option>
                                     <option :value="artist.id" :key="artist.id" v-for="artist in $parent.artists">{{ artist.name }}</option>
                                 </select>
+                                <p class="text-sm text-red-500" v-if="hasError('artist_id')">{{ hasError('artist_id').message }}</p>
                                 <p v-if="!addArtist.toggle" class="mr-2 font-medium text-sm tracking-wide text-purple-700 hover:underline mt-1 cursor-pointer select-none" @click="addArtist.toggle = true">+ Add new artist</p>
                                 <div v-if="addArtist.toggle" class="pl-5 border-t border-b py-4 mt-5">
                                     <div class="mb-4">
                                         <label class="mr-2 font-medium text-sm tracking-wide text-purple-800 mt-4">Artist name:</label>
-                                        <input v-model="addArtist.artist.name" class="w-full block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-3 text-sm">
+                                        <input @click="deleteErrorArtist('name')" v-model="addArtist.artist.name" :class="{ 'border-red-500' : hasErrorArtist('name'), 'border-purple-200' : !hasErrorArtist('name') }" class="w-full block mt-2 rounded-lg border focus:outline-none appearance-none px-2 py-2 leading-3 text-sm">
+                                        <p class="text-sm text-red-500" v-if="hasErrorArtist('name')">{{ hasErrorArtist('name').message }}</p>
                                     </div>
                                     <div class="mb-4">
                                         <label class="mr-2 font-medium text-sm tracking-wide text-purple-800 mt-4">Artist Description:</label>
-                                        <textarea v-model="addArtist.artist.description" class="w-full block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-3 text-sm"></textarea>
+                                        <textarea @click="deleteErrorArtist('description')" v-model="addArtist.artist.description" :class="{ 'border-red-500' : hasErrorArtist('description'), 'border-purple-200' : !hasErrorArtist('description') }" class="w-full block mt-2 rounded-lg border focus:outline-none appearance-none px-2 py-2 leading-3 text-sm"></textarea>
+                                        <p class="text-sm text-red-500" v-if="hasErrorArtist('description')">{{ hasErrorArtist('description').message }}</p>
                                     </div>
                                     <p v-if="addArtist.success" class="text-green-500 text-sm">{{ addArtist.message }}</p> 
                                     <div class="flex justify-between">
@@ -41,18 +45,21 @@
                             </div>
                             <div class="mb-6">
                                 <label class="mr-2 font-medium text-sm tracking-wide text-purple-800">Stage:</label>
-                                <select v-model="performance.stage_id" class="w-full bg-white block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-2 text-sm">
+                                <select @click="deleteError('stage_id')" v-model="performance.stage_id" :class="{ 'border-red-500' : hasError('stage_id'), 'border-purple-200' : !hasError('stage_id') }" class="w-full bg-white block mt-2 rounded-lg border focus:outline-none appearance-none px-2 py-2 leading-2 text-sm">
                                     <option class="py-2" :value="stage.id" :key="stage.id" v-for="stage in $parent.stages">{{ stage.name }}</option>
                                 </select>
+                                <p class="text-sm text-red-500" v-if="hasError('stage_id')">{{ hasError('stage_id').message }}</p>
                                 <p v-if="!addStage.toggle"  class="mr-2 font-medium text-sm tracking-wide text-purple-700 hover:underline mt-1 cursor-pointer select-none" @click="addStage.toggle = true">+ Add new Stage</p>
                                 <div v-if="addStage.toggle" class="pl-5 border-t border-b py-4 mt-5">
                                     <div class="mb-4">
                                         <label class="mr-2 font-medium text-sm tracking-wide text-purple-800 mt-4">Stage name:</label>
-                                        <input v-model="addStage.stage.name" class="w-full block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-3 text-sm">
+                                        <input @click="deleteErrorStage('name')" v-model="addStage.stage.name" :class="{ 'border-red-500' : hasErrorStage('name'), 'border-purple-200' : !hasErrorStage('name') }" class="w-full block mt-2 rounded-lg border focus:outline-none appearance-none px-2 py-2 leading-3 text-sm">
+                                        <p class="text-sm text-red-500" v-if="hasErrorStage('name')">{{ hasErrorStage('name').message }}</p>
                                     </div>
                                     <div class="mb-4">
                                         <label class="mr-2 font-medium text-sm tracking-wide text-purple-800 mt-4">Stage Description:</label>
-                                        <textarea v-model="addStage.stage.description" class="w-full block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-3 text-sm"></textarea>
+                                        <textarea @click="deleteErrorStage('description')" v-model="addStage.stage.description" :class="{ 'border-red-500' : hasErrorStage('description'), 'border-purple-200' : !hasErrorStage('description') }" class="w-full block mt-2 rounded-lg border focus:outline-none appearance-none px-2 py-2 leading-3 text-sm"></textarea>
+                                        <p class="text-sm text-red-500" v-if="hasErrorStage('description')">{{ hasErrorStage('description').message }}</p>
                                     </div>
                                     <p v-if="addStage.success" class="text-green-500 text-sm">{{ addStage.message }}</p>
                                     <div class="flex justify-between">
@@ -63,7 +70,8 @@
                             </div>
                             <div class="mb-6">
                                 <label class="mr-2 font-medium text-sm tracking-wide text-purple-800">Time/Date:</label>
-                                <input v-model="date" type="datetime-local" class="w-full block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-3 text-sm">
+                                <input @click="deleteError('date')" v-model="date" type="datetime-local" :class="{ 'border-red-500' : hasError('date'), 'border-purple-200' : !hasError('date') }" class="w-full block mt-2 rounded-lg border focus:outline-none appearance-none px-2 py-2 leading-3 text-sm">
+                                <p class="text-sm text-red-500" v-if="hasError('date')">{{ hasError('date').message }}</p>
                             </div>
                         </div>
                         <div class="flex mt-5 items-center justify-between bg-purple-100 border-t-2 border-purple-200 px-8 py-6 -m-6 rounded-b-lg">
@@ -83,21 +91,32 @@ import performanceAPI from '@/api/performances'
 export default {
     data(){
         return{
+            errors: [],
             addArtist:{
+                errors: [],
                 success: false,
                 message: '',
                 toggle: false,
-                artist: {},
+                artist: {
+                    name: '',
+                    description: ''
+                },
             },
             addStage:{
+                errors: [],
                 success: false,
                 message: '',
                 toggle: false,
-                stage: {},
+                stage: {
+                    name: '',
+                    description: ''
+                },
             },
             visible: false,
             performance:{
                 name: 'Enter performance name',
+                artist_id: '',
+                stage_id: '',
                 time: '',
                 date: '',
             },
@@ -107,35 +126,129 @@ export default {
 
     methods:{
         createArtist(){
-            artistAPI.addArtist(JSON.stringify(this.addArtist.artist)).then((response) => {
-				if(response.data){
-                    this.addArtist.artist.id = response.data[0].GENERATED_KEY;
-                    this.$parent.artists.push(this.addArtist.artist);
-                    this.addArtist.message = 'Artist has been added';
-                    this.addArtist.success = true;
-                }
-			})
+            if(this.addArtist.artist.name === ''){
+                this.addArtist.errors.push({
+                    field: 'name',
+                    message: 'The name field is required'
+                })
+            }
+            if(this.addArtist.artist.description === ''){
+                this.addArtist.errors.push({
+                    field: 'description',
+                    message: 'The description field is required'
+                })
+            }
+
+            if(this.addArtist.errors.length === 0){
+                artistAPI.addArtist(JSON.stringify(this.addArtist.artist)).then((response) => {
+                    if(response.data){
+                        this.addArtist.artist.id = response.data[0].GENERATED_KEY;
+                        this.$parent.artists.push(this.addArtist.artist);
+                        this.addArtist.message = 'Artist has been added';
+                        this.addArtist.success = true;
+                    }
+                })
+            }
         },
         createStage(){
-            stageAPI.addStage(JSON.stringify(this.addStage.stage)).then((response) => {
-				if(response.data){
-                    this.addStage.stage.id = response.data[0].GENERATED_KEY;
-                    this.$parent.stages.push(this.addStage.stage);
-                    this.addStage.message = 'Stage has been added';
-                    this.addStage.success = true;
-                }
-			})
+            if(this.addStage.stage.name === ''){
+                this.addStage.errors.push({
+                    field: 'name',
+                    message: 'The name field is required'
+                })
+            }
+            if(this.addStage.stage.description === ''){
+                this.addStage.errors.push({
+                    field: 'description',
+                    message: 'The description field is required'
+                })
+            }
+            if(this.addStage.errors.length === 0){
+                stageAPI.addStage(JSON.stringify(this.addStage.stage)).then((response) => {
+                    if(response.data){
+                        this.addStage.stage.id = response.data[0].GENERATED_KEY;
+                        this.$parent.stages.push(this.addStage.stage);
+                        this.addStage.message = 'Stage has been added';
+                        this.addStage.success = true;
+                    }
+                })
+            }
         },
         createPerformance(){
-            performanceAPI.addPerformance(JSON.stringify(this.performance)).then((response) => {
-				if(response.data){
-                    this.performance.id = response.data[0].GENERATED_KEY;
-                    this.$parent.performances.push(this.performance);
-                    this.addStage.message = 'Performance has been added';
-                    this.addStage.success = true;
-                    this.visible = false;
-                }
-			})
+            if(this.performance.name === ''){
+                this.errors.push({
+                    field: 'name',
+                    message: 'The name field is required'
+                })
+            }
+            if(this.performance.artist_id === ''){
+                this.errors.push({
+                    field: 'artist_id',
+                    message: 'The artist field is required'
+                })
+            }
+            if(this.performance.stage_id === ''){
+                this.errors.push({
+                    field: 'stage_id',
+                    message: 'The stage field is required'
+                })
+            }
+            if(this.performance.date === ''){
+                this.errors.push({
+                    field: 'date',
+                    message: 'The date field is required'
+                })
+            }
+            
+            if(this.errors.length === 0){
+                performanceAPI.addPerformance(JSON.stringify(this.performance)).then((response) => {
+                    if(response.data){
+                        this.performance.id = response.data[0].GENERATED_KEY;
+                        this.$parent.performances.push(this.performance);
+                        this.addStage.message = 'Performance has been added';
+                        this.addStage.success = true;
+                        this.visible = false;
+                    }
+                })
+            }
+        },
+        hasError(field){
+            var error = this.errors.find(element => element.field === field)
+            if(error !== undefined){
+                return error
+            }
+        },
+
+        deleteError(field){
+            this.errors = this.errors.filter(e => {
+                return e.field !== field
+            })
+        },
+
+        hasErrorArtist(field){
+            var error = this.addArtist.errors.find(element => element.field === field)
+            if(error !== undefined){
+                return error
+            }
+        },
+
+        deleteErrorArtist(field){
+            this.addArtist.errors = this.addArtist.errors.filter(e => {
+                return e.field !== field
+            })
+        },
+
+        hasErrorStage(field){
+            var error = this.addStage.errors.find(element => element.field === field)
+            if(error !== undefined){
+                return error
+            }
+        },
+
+        deleteErrorStage(field){
+            this.addStage.errors = this.addStage.errors.filter(e => {
+                return e.field !== field
+            })
         }
     },
 

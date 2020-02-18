@@ -11,11 +11,13 @@
                         <div class="mx-6 mb-2 py-4 mt-5">
                             <div class="mb-4">
                                 <label class="mr-2 font-medium text-sm tracking-wide text-purple-800 mt-4">Artist name:</label>
-                                <input v-model="artist.name" class="w-full block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-3 text-sm">
+                                <input @click="deleteError('name')" v-model="artist.name" :class="{ 'border-red-500' : hasError('name'), 'border-purple-200' : !hasError('name') }" class="w-full block mt-2 rounded-lg border focus:outline-none appearance-none px-2 py-2 leading-3 text-sm">
+                                 <p class="text-sm text-red-500" v-if="hasError('name')">{{ hasError('name').message }}</p>
                             </div>
                             <div class="mb-8">
                                 <label class="mr-2 font-medium text-sm tracking-wide text-purple-800 mt-4">Artist Description:</label>
-                                <textarea rows="5" style="min-height: 20px;" v-model="artist.description" class="w-full block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-4 text-sm"></textarea>
+                                <textarea @click="deleteError('description')" rows="5" style="min-height: 20px;" v-model="artist.description" :class="{ 'border-red-500' : hasError('description'), 'border-purple-200' : !hasError('description') }" class="w-full block mt-2 rounded-lg border focus:outline-none appearance-none px-2 py-2 leading-4 text-sm"></textarea>
+                                <p class="text-sm text-red-500" v-if="hasError('description')">{{ hasError('description').message }}</p>
                             </div>
                             <div>
                                 <button @click="remove" class="bg-red-500 hover:bg-red-600 duration-100 transition text-white py-2 rounded shadow text-sm px-5">Delete Artist</button>
@@ -37,16 +39,32 @@ export default {
     data(){
         return{
             visible: false,
-            artist:{}
+            artist:{},
+            errors: []
         }
     },
     methods:{
-        submit(){     
-            api.editArtist(JSON.stringify(this.artist)).then((response) => {
-				if(response.data = "Success"){
-                    this.visible = false;
-                }
-			})   
+        submit(){   
+            if(this.artist.name === ''){
+                this.errors.push({
+                    field: 'name',
+                    message: 'The name field is required'
+                })
+            }
+            if(this.artist.description === ''){
+                this.errors.push({
+                    field: 'description',
+                    message: 'The description field is required'
+                })
+            }  
+
+            if(this.errors.length === 0){
+                api.editArtist(JSON.stringify(this.artist)).then((response) => {
+                    if(response.data = "Success"){
+                        this.visible = false;
+                    }
+                })   
+            }
         },
         remove(){
             api.deleteArtist(JSON.stringify(this.artist)).then((response) => {
@@ -57,6 +75,18 @@ export default {
                     this.visible = false;
                 }
 			})   
+        },
+        hasError(field){
+            var error = this.errors.find(element => element.field === field)
+            if(error !== undefined){
+                return error
+            }
+        },
+
+        deleteError(field){
+            this.errors = this.errors.filter(e => {
+                return e.field !== field
+            })
         }
     }
 }

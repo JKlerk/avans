@@ -13,11 +13,13 @@
                                 <div class="py-4 mt-5">
                                     <div class="mb-4">
                                         <label class="mr-2 font-medium text-sm tracking-wide text-purple-800 mt-4">Artist name:</label>
-                                        <input v-model="artist.name" class="w-full block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-3 text-sm">
+                                        <input @click="deleteError('name')" v-model="artist.name" :class="{ 'border-red-500' : hasError('name'), 'border-purple-200' : !hasError('name') }" class="w-full block mt-2 rounded-lg border focus:outline-none appearance-none px-2 py-2 leading-3 text-sm">
+                                        <p class="text-sm text-red-500" v-if="hasError('name')">{{ hasError('name').message }}</p>
                                     </div>
                                     <div class="mb-4">
                                         <label class="mr-2 font-medium text-sm tracking-wide text-purple-800 mt-4">Artist Description:</label>
-                                        <textarea rows="5" v-model="artist.description" class="w-full block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-4 text-sm"></textarea>
+                                        <textarea @click="deleteError('description')" rows="5" v-model="artist.description" :class="{ 'border-red-500' : hasError('description'), 'border-purple-200' : !hasError('description') }" class="w-full block mt-2 rounded-lg border focus:outline-none appearance-none px-2 py-2 leading-4 text-sm"></textarea>
+                                        <p class="text-sm text-red-500" v-if="hasError('description')">{{ hasError('description').message }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -41,8 +43,10 @@ export default {
         return{
             visible: false,
             artist: {
-                name: 'Please enter a name'
+                name: 'Please enter a name',
+                description: '',
             },
+            errors: [],
         }
     },
     components:{
@@ -50,13 +54,40 @@ export default {
     },
     methods:{
         submit(){
-            api.addArtist(JSON.stringify(this.artist)).then((response) => {
-				if(response.data){
-                    this.artist.id = response.data[0].GENERATED_KEY;
-                    this.$store.state.artists.push(this.artist);
-                    this.visible = false;
-                }
-			})
+            if(this.artist.name === ''){
+                this.errors.push({
+                    field: 'name',
+                    message: 'The name field is required'
+                })
+            }
+            if(this.artist.description === ''){
+                this.errors.push({
+                    field: 'description',
+                    message: 'The description field is required'
+                })
+            }
+
+            if(this.errors.length === 0){
+                api.addArtist(JSON.stringify(this.artist)).then((response) => {
+                    if(response.data){
+                        this.artist.id = response.data[0].GENERATED_KEY;
+                        this.$store.state.artists.push(this.artist);
+                        this.visible = false;
+                    }
+                })
+            }
+        },
+        hasError(field){
+            var error = this.errors.find(element => element.field === field)
+            if(error !== undefined){
+                return error
+            }
+        },
+
+        deleteError(field){
+            this.errors = this.errors.filter(e => {
+                return e.field !== field
+            })
         }
     },
 }

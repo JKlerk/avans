@@ -13,11 +13,13 @@
                                 <div class="py-4 mt-5">
                                     <div class="mb-4">
                                         <label class="mr-2 font-medium text-sm tracking-wide text-purple-800 mt-4">Stage name:</label>
-                                        <input v-if="stage.name " v-model="stage.name" class="w-full block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-3 text-sm">
+                                        <input @click="deleteError('name')" v-model="stage.name" :class="{ 'border-red-500' : hasError('name'), 'border-purple-200' : !hasError('name') }" class="w-full block mt-2 rounded-lg border focus:outline-none appearance-none px-2 py-2 leading-3 text-sm">
+                                        <p class="text-sm text-red-500" v-if="hasError('name')">{{ hasError('name').message }}</p>
                                     </div>
                                     <div class="mb-4">
                                         <label class="mr-2 font-medium text-sm tracking-wide text-purple-800 mt-4">Stage Description:</label>
-                                        <textarea rows="5" v-model="stage.description" class="w-full block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-4 text-sm"></textarea>
+                                        <textarea @click="deleteError('description')" rows="5" :class="{ 'border-red-500' : hasError('description'), 'border-purple-200' : !hasError('description') }" v-model="stage.description" class="w-full block mt-2 rounded-lg border focus:outline-none appearance-none px-2 py-2 leading-4 text-sm"></textarea>
+                                        <p class="text-sm text-red-500" v-if="hasError('description')">{{ hasError('description').message }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -42,7 +44,8 @@ export default {
             visible: false,
             errors: [],
             stage: {
-                name: 'Please enter a name'
+                name: 'Please enter a name',
+                description: '',
             },
         }
     },
@@ -51,15 +54,20 @@ export default {
     },
     methods:{
         submit(){
-            if(stage.name === ''){
-                var error = {
-                    name: 'name',
-                    message: 'The stage field is required'
-                }
-                this.errors.push(error)   
+            if(this.stage.name === ''){
+                this.errors.push({
+                    field: 'name',
+                    message: 'The name field is required'
+                })
+            }
+            if(this.stage.description === ''){
+                this.errors.push({
+                    field: 'description',
+                    message: 'The description field is required'
+                })
             }
 
-            if(errors.length === 0){
+            if(this.errors.length === 0){
                 api.addStage(JSON.stringify(this.stage)).then((response) => {
                     if(response.data){
                         this.stage.id = response.data[0].GENERATED_KEY;
@@ -68,6 +76,18 @@ export default {
                     }
                 })
             }
+        },
+        hasError(field){
+            var error = this.errors.find(element => element.field === field)
+            if(error !== undefined){
+                return error
+            }
+        },
+
+        deleteError(field){
+            this.errors = this.errors.filter(e => {
+                return e.field !== field
+            })
         }
     },
 }
