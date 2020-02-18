@@ -42,13 +42,13 @@
                             <div v-if="confirm" class="mb-2">
                                 <p class="text-sm">Are you sure?</p>
                                 <div class="flex mt-2">
-                                    <button class="mr-2 text-sm p-1 bg-purple-700 hover:bg-purple-800 transition duration-100 text-white rounded-lg px-4 focus:outline-none">Yes</button>
+                                    <button @click="remove" class="mr-2 text-sm p-1 bg-purple-700 hover:bg-purple-800 transition duration-100 text-white rounded-lg px-4 focus:outline-none">Yes</button>
                                     <button class="mx-2 text-sm p-1 bg-purple-700 hover:bg-purple-800 transition duration-100 text-white rounded-lg px-4 focus:outline-none" @click="confirm = false">No</button>
                                 </div>
                             </div>
                         </div>
                         <div class="flex mt-5 items-center justify-between bg-purple-100 border-t-2 border-purple-200 px-8 py-6 -m-6 rounded-b-lg">
-                            <button class="text-white bg-purple-500 hover:bg-purple-600 rounded-full px-8 py-2 text-sm font-semibold transition duration-100 focus:outline-none">Save</button>
+                            <button @click="submit" class="text-white bg-purple-500 hover:bg-purple-600 rounded-full px-8 py-2 text-sm font-semibold transition duration-100 focus:outline-none">Save</button>
                             <button @click="visible = false, isEditing = false" class="text-purple-100 bg-purple-700 hover:bg-purple-800 rounded-full px-8 py-2 text-sm font-semibold transition duration-100 focus:outline-none">Close</button>
                         </div>
                     </div>
@@ -60,6 +60,7 @@
 
 <script>
 import { Edit2Icon } from 'vue-feather-icons'
+import api from '@/api/performances'
 export default {
     data(){
         return{
@@ -74,5 +75,32 @@ export default {
     components:{
         Edit2Icon,
     },
+    methods:{
+        submit(){
+            this.performance.date = this.performance.date.split('T')[0]
+            api.editPerformance(JSON.stringify(this.performance)).then((response) => {
+				if(response.data = "Success"){
+                    this.visible = false;
+                }
+			})
+        },
+        remove(){
+            api.deletePerformance(JSON.stringify(this.performance)).then((response) => {
+				if(response.data = "Success"){
+                    this.$parent.performances = this.$parent.performances.filter(oldPerformance => {
+                        return !(oldPerformance.id === this.performance.id)
+                    });
+                    this.visible = false;
+                }
+			})  
+        },
+    },
+    computed:{
+        formattedDate(){
+            return this.performance.date = this.performance.date + "T" + this.performance.time;
+            // this.performance.date = this.date.split('T')[0]
+            // return this.performance.time = this.date.split('T')[1]
+        },
+    }
 }
 </script>

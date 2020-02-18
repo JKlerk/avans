@@ -110,21 +110,15 @@ export default {
   				"Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
 			];
 			var fullDate = performance.date.split('-');
-			let month = String
-			let day = String
+			let month = ''
+			let day = fullDate[2]
+			// console.log(fullDate[2])
 
 			// Removes 0 from month
 			if(fullDate[1].includes(0)){
 				month = monthNames[fullDate[1].split('0')[1] - 1]	
 			} else{
 				month = monthNames[fullDate[1] - 1]
-			}
-
-			// Removes 0 from day
-			if(fullDate[2].includes(0)){
-				day = fullDate[2].split('0')[1]	
-			} else{
-				day = fullDate[2]
 			}
 
 			return{ month: month, day: day }

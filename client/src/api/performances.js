@@ -12,10 +12,10 @@ export default {
     addPerformance(params) {
       return client.post('addperformance', params);
     },
-    editStage(params) {
-      return client.post('editstage', params);
+    editPerformance(params) {
+      return client.post('editperformance', params);
     },
-    deleteStage(params) {
-      return client.post('deletestage', params);
+    deletePerformance(params) {
+      return client.post('deleteperformance', params);
     },
 };

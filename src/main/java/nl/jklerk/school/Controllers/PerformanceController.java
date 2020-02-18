@@ -67,4 +67,52 @@ public class PerformanceController {
         res.sendBody(exc);
     }
 
+
+    public static void editPerformance(HttpExchange exc) throws IOException {
+        String data = Request.getRequestBody(exc);
+
+        int id = new JsonMapper().readTree(data).get("id").asInt();
+        String name = new JsonMapper().readTree(data).get("name").asText();
+        String time = new JsonMapper().readTree(data).get("time").asText();
+        String date = new JsonMapper().readTree(data).get("date").asText();
+        int artist_id = new JsonMapper().readTree(data).get("artist_id").asInt();
+        int stage_id = new JsonMapper().readTree(data).get("stage_id").asInt();
+
+        try {
+            String sql = "UPDATE performances SET name = ?, time = ?, date = ?, artist_id = ?, stage_id = ? WHERE id=?;";
+            PreparedStatement preparedStatement = Database.connect().prepareStatement(sql);
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, time);
+            preparedStatement.setString(3, date);
+            preparedStatement.setString(4, String.valueOf(artist_id));
+            preparedStatement.setString(5, String.valueOf(stage_id));
+            preparedStatement.setString(6, String.valueOf(id));
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        var res = new Response(200, "Success");
+        res.sendBody(exc);
+
+    }
+
+    public static void deletePerformance(HttpExchange exc) throws IOException {
+        String data = Request.getRequestBody(exc);
+        var id = new JsonMapper().readTree(data).get("id").asText();
+
+        try {
+            String sql = "DELETE FROM performances WHERE id=?;";
+            PreparedStatement preparedStatement = Database.connect().prepareStatement(sql);
+            preparedStatement.setString(1, id);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        var res = new Response(200, "Success");
+        res.sendBody(exc);
+
+    }
+
 }

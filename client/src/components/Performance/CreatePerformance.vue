@@ -133,6 +133,7 @@ export default {
                     this.$parent.performances.push(this.performance);
                     this.addStage.message = 'Performance has been added';
                     this.addStage.success = true;
+                    this.visible = false;
                 }
 			})
         }
