@@ -32,10 +32,10 @@
                                         <label class="mr-2 font-medium text-sm tracking-wide text-purple-800 mt-4">Artist Description:</label>
                                         <textarea v-model="addArtist.artist.description" class="w-full block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-3 text-sm"></textarea>
                                     </div>
-                                    <p v-if="success" class="text-green-500 text-sm">{{ message }}</p> 
+                                    <p v-if="addArtist.success" class="text-green-500 text-sm">{{ addArtist.message }}</p> 
                                     <div class="flex justify-between">
                                         <button @click="createArtist" class="text-sm p-2 bg-green-500 hover:bg-green-600 text-white my-2 rounded-lg px-5 transition duration-100">Save</button>
-                                        <button class="text-sm p-2 bg-red-500 hover:bg-red-600 text-white my-2 rounded-lg px-5 transition duration-100" @click="addArtist.toggle = false, addArtist.artist = {}">Cancel</button>
+                                        <button class="text-sm p-2 bg-red-500 hover:bg-red-600 text-white my-2 rounded-lg px-5 transition duration-100" @click="addArtist.toggle = false, addArtist.success = false, addAritst.mssage = '', addArtist.artist = {}">Close</button>
                                     </div>
                                 </div>
                             </div>
@@ -54,9 +54,10 @@
                                         <label class="mr-2 font-medium text-sm tracking-wide text-purple-800 mt-4">Stage Description:</label>
                                         <textarea v-model="addStage.stage.description" class="w-full block mt-2 rounded-lg border border-purple-200 focus:outline-none appearance-none px-2 py-2 leading-3 text-sm"></textarea>
                                     </div>
-                                    <div class="flex justify-between mt-3">
-                                        <button class="text-sm p-2 bg-green-500 hover:bg-green-600 text-white my-2 rounded-lg px-5 transition duration-100">Save</button>
-                                        <button class="text-sm p-2 bg-red-500 hover:bg-red-600 text-white my-2 rounded-lg px-5 transition duration-100" @click="addStage.toggle = false, addStage.stage = {}">Cancel</button>
+                                    <p v-if="addStage.success" class="text-green-500 text-sm">{{ addStage.message }}</p>
+                                    <div class="flex justify-between">
+                                        <button @click="createStage" class="text-sm p-2 bg-green-500 hover:bg-green-600 text-white my-2 rounded-lg px-5 transition duration-100">Save</button>
+                                        <button class="text-sm p-2 bg-red-500 hover:bg-red-600 text-white my-2 rounded-lg px-5 transition duration-100" @click="addStage.toggle = false, addStage.success = false, addStage.message = '', addStage.stage = {}">Close</button>
                                     </div>
                                 </div>
                             </div>
@@ -77,14 +78,19 @@
 </template>
 <script>
 import artistAPI from '@/api/artists'
+import stageAPI from '@/api/stages'
 export default {
     data(){
         return{
             addArtist:{
+                success: false,
+                message: '',
                 toggle: false,
                 artist: {},
             },
             addStage:{
+                success: false,
+                message: '',
                 toggle: false,
                 stage: {},
             },
@@ -95,9 +101,6 @@ export default {
                 date: '',
             },
             date: '',
-            message: '',
-            success: false
-
         }
     },
 
@@ -107,8 +110,18 @@ export default {
 				if(response.data){
                     this.addArtist.artist.id = response.data[0].GENERATED_KEY;
                     this.$parent.artists.push(this.addArtist.artist);
-                    this.message = 'Artist has been added';
-                    this.success = true;
+                    this.addArtist.message = 'Artist has been added';
+                    this.addArtist.success = true;
+                }
+			})
+        },
+        createStage(){
+            stageAPI.addStage(JSON.stringify(this.addStage.stage)).then((response) => {
+				if(response.data){
+                    this.addStage.stage.id = response.data[0].GENERATED_KEY;
+                    this.$parent.stages.push(this.addStage.stage);
+                    this.addStage.message = 'Stage has been added';
+                    this.addStage.success = true;
                 }
 			})
         }
