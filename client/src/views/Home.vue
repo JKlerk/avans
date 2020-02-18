@@ -48,7 +48,7 @@
 									<span class="px-4 py-2 text-sm shadow bg-white rounded-lg font-bold">{{ performance.time }}</span>
 								</div>
 								<div class="flex flex-1 justify-end">
-									<span class="px-4 py-2 text-sm shadow bg-white rounded-lg font-bold text-purple-600">{{ getSpecificStage(performance) }}</span>
+									<span class="px-4 py-2 text-sm shadow bg-white rounded-lg font-bold text-purple-600">{{ getSpecificStage(performance).name }}</span>
 								</div>
 							</div>
 						</div>
@@ -58,7 +58,7 @@
 								<p class="font-bold mt-3">{{ getDate(performance).day }}</p>
 							</div>
 							<div>
-								<h1 class="font-medium mb-2">{{ getSpecificArtist(performance) }} - {{ performance.name }}</h1>
+								<h1 class="font-medium mb-2">{{ getSpecificArtist(performance).name }} - {{ performance.name }}</h1>
 								<p class="text-sm text-gray-700">Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
 							</div>
 						</div>
@@ -81,7 +81,7 @@ import Performance from '@/components/Performance/Performance'
 import CreatePerformance from '@/components/Performance/CreatePerformance'
 
 // Json files
-import performancesData from '@/performances.json'
+// import performancesData from '@/performances.json'
 
 
 import artistsAPI from '@/api/artists'
@@ -132,14 +132,14 @@ export default {
 
 		getSpecificArtist(performance){
 			if(this.artists){
-				return this.artists.find(element => element.id === performance.artist_id).name;
+				return this.artists.find(element => element.id === performance.artist_id);
 			} else{
 				return 'undefined'
 			}
 		},
 		getSpecificStage(performance){
 			if(this.stages){
-				return this.stages.find(element => element.id === performance.stage_id).name;
+				return this.stages.find(element => element.id === performance.stage_id);
 			} else{
 				return 'undefined'
 			}
