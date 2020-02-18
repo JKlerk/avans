@@ -207,6 +207,13 @@ export default {
                         this.$parent.performances.push(this.performance);
                         this.addStage.message = 'Performance has been added';
                         this.addStage.success = true;
+                        this.performance = {           
+                            name: 'Enter performance name',
+                            artist_id: '',
+                            stage_id: '',
+                            time: '',
+                            date: '',
+                        };
                         this.visible = false;
                     }
                 })

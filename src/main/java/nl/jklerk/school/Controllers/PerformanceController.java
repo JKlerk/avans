@@ -14,12 +14,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class PerformanceController {
-    private String name = null;
-    private String time = null;
-    private String date = null;
-    private int artist_id = 0;
-    private int stage_id = 0;
-
 
     public static void getPerformances(HttpExchange exc) throws IOException {
 

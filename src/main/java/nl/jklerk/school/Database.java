@@ -44,25 +44,4 @@ public class Database {
         }
         return array;
     }
-
-    /*public List<Artist> getArtists() {
-        try {
-            final var result = connection.createStatement().executeQuery("SELECT * FROM artists");
-
-            var artists = new ArrayList<Artist>();
-            while (result.next()) {
-                artists.add(new Artist(
-                        result.getInt("id"),
-                        result.getString("name"),
-                        result.getInt("band")
-                ));
-            }
-
-            return artists;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return Collections.emptyList();
-    }*/
 }
