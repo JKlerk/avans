@@ -9,6 +9,9 @@ import nl.jklerk.school.Controllers.StageController;
 public class web {
     private static HttpServer httpServer;
 
+    /**
+     * Method so define routes with a handler
+     */
     public static void setRouters(HttpServer server){
         httpServer = server;
 
@@ -32,7 +35,9 @@ public class web {
         route("/api/deleteperformance", PerformanceController::deletePerformance);
     }
 
-    //    Sets route with controller
+    /**
+     * Creates a new route with a handler
+     */
     public static void route(String path, HttpHandler controller){
         httpServer.createContext(path).setHandler(controller);
     }

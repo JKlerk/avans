@@ -13,9 +13,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class ArtistController {
+public class ArtistController{
 
-    public static void getArtists(HttpExchange exc) throws IOException {
+    /**
+     * Methods to get all artists with a SQL query
+     */
+    public static boolean getArtists(HttpExchange exc) throws IOException {
 
         JSONArray data = new JSONArray();
         try {
@@ -26,12 +29,13 @@ public class ArtistController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        var res = new Response(200, data.toString());
-
-        res.sendBody(exc);
+        return new Response(200, data.toString()).sendBody(exc);
 
     }
 
+    /**
+     * Method to insert new data from the request body
+     */
     public static void postArtist(HttpExchange exc) throws IOException {
         String data = Request.getRequestBody(exc);
 
@@ -56,6 +60,9 @@ public class ArtistController {
         res.sendBody(exc);
     }
 
+    /**
+     * Method to update artist based on data from request body
+     */
     public static void editArtist(HttpExchange exc) throws IOException {
         String data = Request.getRequestBody(exc);
         var id = new JsonMapper().readTree(data).get("id").asText();
@@ -78,6 +85,9 @@ public class ArtistController {
 
     }
 
+    /**
+     * Method to delete artist based on id
+     */
     public static void deleteArtist(HttpExchange exc) throws IOException {
         String data = Request.getRequestBody(exc);
         var id = new JsonMapper().readTree(data).get("id").asText();
@@ -96,17 +106,3 @@ public class ArtistController {
 
     }
 }
-
-//    private static final Database database = new Database();
-
-//   public static JSONArray getArtists(HttpExchange exchange) {
-//        ResultSet resultSet = null;
-//        try {
-//            String sql = "SELECT * FROM artists";
-//            PreparedStatement preparedStatement = Database.connect().prepareStatement(sql);
-//            resultSet = preparedStatement.executeQuery();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return (exchange, Database.createJson(resultSet));
-//}

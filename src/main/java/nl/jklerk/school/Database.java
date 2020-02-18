@@ -12,6 +12,15 @@ public class Database {
 
     private static Connection connection;
 
+    /**
+     * @param type type of database being used
+     * @param username username of the database
+     * @param password password of the database
+     * @param url url the database should be listening to
+     * @param port port the database shouldf be listening to
+     * @param database name of the database
+     * @return Returns database connection
+     */
     public Database connect(String type, String username, String password, String url, String port, String database){
         try {
             connection = DriverManager.getConnection("jdbc:mysql://"+ url + ":" + port + "/" + database + "?" + "user=" + username + "&password=" + password);
@@ -22,10 +31,16 @@ public class Database {
         return this;
     }
 
+
     public static Connection connect(){
         return connection;
     }
 
+
+    /**
+     * @param resultSet resultSet from SQL
+     * @return Returns JSON
+     */
     public static JSONArray createJson(ResultSet resultSet) {
         JSONArray array = new JSONArray();
         try {

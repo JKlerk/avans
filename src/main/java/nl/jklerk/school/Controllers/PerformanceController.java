@@ -15,6 +15,9 @@ import java.sql.Statement;
 
 public class PerformanceController {
 
+    /**
+     * Methods to get all performances with a sql query
+     */
     public static void getPerformances(HttpExchange exc) throws IOException {
 
         JSONArray data = new JSONArray();
@@ -30,6 +33,9 @@ public class PerformanceController {
         res.sendBody(exc);
     }
 
+    /**
+     * Method to insert data from request and returns latest id
+     */
     public static void postPerformance(HttpExchange exc) throws IOException {
         String data = Request.getRequestBody(exc);
 
@@ -61,7 +67,9 @@ public class PerformanceController {
         res.sendBody(exc);
     }
 
-
+    /**
+     * Method to update performances based on id from request
+     */
     public static void editPerformance(HttpExchange exc) throws IOException {
         String data = Request.getRequestBody(exc);
 
@@ -91,6 +99,9 @@ public class PerformanceController {
 
     }
 
+    /**
+     * Method to remove a specific performance with id
+     */
     public static void deletePerformance(HttpExchange exc) throws IOException {
         String data = Request.getRequestBody(exc);
         var id = new JsonMapper().readTree(data).get("id").asText();

@@ -8,10 +8,16 @@ import java.net.InetSocketAddress;
 
 public class Main {
 
+    /**
+     * Specifiy on which port the api should run
+     */
     public static void main(String[] args) throws IOException {
         initServer(8001);
     }
 
+    /**
+     * Initiates the httpserver and listens to port
+     */
     private static void initServer(int port) throws IOException{
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
         initDB();
@@ -20,6 +26,10 @@ public class Main {
         server.start();
         System.out.println("[Server] running on port: " + port);
     }
+
+    /**
+     * Makes a new database connection
+     */
     private static void initDB(){
         String type = "mysql";
         String username = "root";
