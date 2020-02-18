@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class StageController {
 
@@ -35,10 +36,14 @@ public class StageController {
 
         try {
             String sql = "INSERT INTO stages (name, description) VALUES (?,?)";
-            PreparedStatement preparedStatement = Database.connect().prepareStatement(sql);
+            PreparedStatement preparedStatement = Database.connect().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, desc);
+            preparedStatement.getGeneratedKeys();
             preparedStatement.executeUpdate();
+
+            var res = new Response(200, Database.createJson(preparedStatement.getGeneratedKeys()).toString());
+            res.sendBody(exc);
 
         } catch (SQLException e) {
             e.printStackTrace();
