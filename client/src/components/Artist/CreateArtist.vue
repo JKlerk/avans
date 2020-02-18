@@ -51,7 +51,8 @@ export default {
     methods:{
         submit(){
             api.addArtist(JSON.stringify(this.artist)).then((response) => {
-				if(response.data = "Success"){
+				if(response.data){
+                    this.artist.id = response.data[0].GENERATED_KEY;
                     this.$store.state.artists.push(this.artist);
                     this.visible = false;
                 }

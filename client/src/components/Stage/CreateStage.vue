@@ -51,7 +51,8 @@ export default {
     methods:{
         submit(){
             api.addStage(JSON.stringify(this.stage)).then((response) => {
-				if(response.data = "Success"){
+				if(response.data){
+                    this.stage.id = response.data[0].GENERATED_KEY;
                     this.$store.state.stages.push(this.stage);
                     this.visible = false;
                 }
