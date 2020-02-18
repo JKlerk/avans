@@ -1,6 +1,7 @@
 package nl.jklerk.school;
 
 import com.sun.net.httpserver.HttpServer;
+import io.github.cdimascio.dotenv.Dotenv;
 import nl.jklerk.school.routes.web;
 
 import java.io.IOException;
@@ -24,19 +25,21 @@ public class Main {
 
         web.setRouters(server);
         server.start();
-        System.out.println("[Server] running on port: " + port);
+        System.out.println("[Server] listening on: " + port);
     }
 
     /**
      * Makes a new database connection
      */
     private static void initDB(){
-        String type = "mysql";
-        String username = "root";
-        String password = "password";
-        String url = "localhost";
-        String port = "3306";
-        String database = "avans";
+        Dotenv dotenv = Dotenv.load();
+
+        String type = dotenv.get("DB_TYPE");
+        String username = dotenv.get("DB_USER");
+        String password = dotenv.get("DB_PASSWORD");
+        String url = dotenv.get("DB_DOMAIN");
+        String port = dotenv.get("DB_PORT");
+        String database = dotenv.get("DB_NAME");
 
         new Database().connect(type, username, password, url, port, database);
     }

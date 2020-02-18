@@ -24,7 +24,7 @@ public class Database {
     public Database connect(String type, String username, String password, String url, String port, String database){
         try {
             connection = DriverManager.getConnection("jdbc:mysql://"+ url + ":" + port + "/" + database + "?" + "user=" + username + "&password=" + password);
-            System.out.println("[" + type + "] " + "Connected to DB");
+            System.out.println("[" + type + "] " + "Connected to DB on port: " + port);
         } catch (SQLException e) {
             System.out.println("Connection to DB failed - " + e);
         }

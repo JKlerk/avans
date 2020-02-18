@@ -4,7 +4,7 @@ import Home from '../views/Home.vue'
 import Artists from '../views/Artists.vue'
 import Stages from '../views/Stages.vue'
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   { 
@@ -26,12 +26,12 @@ const routes = [
     name: 'stages',
     component: Stages
   },
-]
+];
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
-})
+});
 
 export default router
