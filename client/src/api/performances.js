@@ -9,8 +9,8 @@ export default {
     getPerformances(params) {
       return client.get('getperformances', params);
     },
-    addStage(params) {
-      return client.post('addstage', params);
+    addPerformance(params) {
+      return client.post('addperformance', params);
     },
     editStage(params) {
       return client.post('editstage', params);

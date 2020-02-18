@@ -54,7 +54,6 @@ public class ArtistController {
         }
         var res = new Response(404, "Something went wrong");
         res.sendBody(exc);
-
     }
 
     public static void editArtist(HttpExchange exc) throws IOException {

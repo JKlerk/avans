@@ -40,8 +40,8 @@
 					</div>
 				</div>
 				<!-- Body -->
-				<div class="flex flex-row just mt-10">
-					<div :key="performance.id" v-for="performance in performances" class="shadow rounded-lg bg-white w-1/3 hover:opacity-50 transition duration-200 cursor-pointer mr-5" @click="$refs.performance.visible = true, $refs.performance.artist = getSpecificArtist(performance), $refs.performance.performance = performance, $refs.performance.stage = getSpecificStage(performance)">
+				<div class="flex flex-wrap just mt-10">
+					<div :key="performance.id" v-for="performance in performances" class=" flex flex-col w-1/3 hover:opacity-50 transition duration-200 cursor-pointer pr-5" @click="$refs.performance.visible = true, $refs.performance.artist = getSpecificArtist(performance), $refs.performance.performance = performance, $refs.performance.stage = getSpecificStage(performance)">
 						<div class="h-48 rounded-t-lg" style="background-image: url('https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60'); background-position: center; background-size: cover;">
 							<div class="flex p-4">
 								<div class="mt-1">
@@ -52,7 +52,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="flex py-10">
+						<div class="flex py-10 bg-white rounded-b-lg shadow">
 							<div class="ml-4 mr-8">
 								<p class="text-sm text-purple-600">{{ getDate(performance).month }}</p>
 								<p class="font-bold mt-3">{{ getDate(performance).day }}</p>

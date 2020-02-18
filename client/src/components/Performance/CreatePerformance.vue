@@ -67,7 +67,7 @@
                             </div>
                         </div>
                         <div class="flex mt-5 items-center justify-between bg-purple-100 border-t-2 border-purple-200 px-8 py-6 -m-6 rounded-b-lg">
-                            <button class="text-white bg-purple-500 hover:bg-purple-600 rounded-full px-8 py-2 text-sm font-semibold transition duration-100 focus:outline-none">Save</button>
+                            <button @click="createPerformance" class="text-white bg-purple-500 hover:bg-purple-600 rounded-full px-8 py-2 text-sm font-semibold transition duration-100 focus:outline-none">Save</button>
                             <button @click="visible = false, performance = { name: 'Enter performance name'}, date = '', addArtist.toggle = false, addStage.toggle = false" class="text-purple-100 bg-purple-700 hover:bg-purple-800 rounded-full px-8 py-2 text-sm font-semibold transition duration-100 focus:outline-none">Close</button>
                         </div>
                     </div>
@@ -79,6 +79,7 @@
 <script>
 import artistAPI from '@/api/artists'
 import stageAPI from '@/api/stages'
+import performanceAPI from '@/api/performances'
 export default {
     data(){
         return{
@@ -121,6 +122,16 @@ export default {
                     this.addStage.stage.id = response.data[0].GENERATED_KEY;
                     this.$parent.stages.push(this.addStage.stage);
                     this.addStage.message = 'Stage has been added';
+                    this.addStage.success = true;
+                }
+			})
+        },
+        createPerformance(){
+            performanceAPI.addPerformance(JSON.stringify(this.performance)).then((response) => {
+				if(response.data){
+                    this.performance.id = response.data[0].GENERATED_KEY;
+                    this.$parent.performances.push(this.performance);
+                    this.addStage.message = 'Performance has been added';
                     this.addStage.success = true;
                 }
 			})

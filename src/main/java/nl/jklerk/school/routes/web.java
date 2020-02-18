@@ -27,6 +27,7 @@ public class web {
 
         // Performances routing
         route("/api/getperformances", PerformanceController::getPerformances);
+        route("/api/addperformance", PerformanceController::postPerformance);
     }
 
     //    Sets route with controller

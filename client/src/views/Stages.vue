@@ -18,9 +18,9 @@
                 </div>
                 <!-- Body -->
                 <div class="flex flex-wrap mt-10">
-                    <div class="flex shadow rounded-lg bg-white w-1/2 hover:opacity-50 transition duration-200 cursor-pointer mb-5" @click="$refs.editstage.visible = true, $refs.editstage.stage = stage" :key="stage.id" v-for="stage in this.$store.state.stages">
+                    <div class="flex w-1/2 hover:opacity-50 transition duration-200 cursor-pointer mb-5" @click="$refs.editstage.visible = true, $refs.editstage.stage = stage" :key="stage.id" v-for="stage in this.$store.state.stages">
                         <div class="rounded-l-lg w-1/3" style="background-image: url('https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60'); background-position: center; background-size: cover;"></div>
-                        <div class="py-10 w-2/3">
+                        <div class="py-10 w-2/3 flex flex-col mr-5 bg-white shadow rounded-r-lg">
                             <h2 class="text-2xl ml-4 text-purple-700">{{ stage.name }}</h2>
                             <p class="text-gray-700 ml-4">{{ stage.description }}</p>
                         </div>
